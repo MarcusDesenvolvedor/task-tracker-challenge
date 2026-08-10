@@ -1,3 +1,4 @@
+import { AppHeader } from "@/components/layout/AppHeader";
 import { MainContent } from "@/components/layout/MainContent";
 import { RouteTransition } from "@/components/layout/RouteTransition";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -15,6 +16,7 @@ export function AppShell({ tasks, categories, children }: AppShellProps) {
     <div className="flex min-h-screen flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
       <Sidebar tasks={tasks} categories={categories} />
       <MainContent>
+        <AppHeader tasks={tasks} categories={categories} />
         <RouteTransition>{children}</RouteTransition>
       </MainContent>
     </div>
