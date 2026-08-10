@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { getCategoryColorLabel } from "@/lib/constants/category";
 import type { Category } from "@/lib/types/category";
+import { CategoryColorDot } from "./CategoryColorDot";
 
 interface CategoryListProps {
   categories: Category[];
@@ -23,30 +25,34 @@ export function CategoryList({
   }
 
   return (
-    <ul className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-950">
-      {categories.map((category) => (
-        <li key={category.id}>
-          <Link
-            href={`/categories/${category.id}`}
-            className="flex min-h-14 items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-zinc-50 sm:px-5 dark:hover:bg-zinc-900"
-          >
-            <div className="flex min-w-0 items-center gap-3">
-              <span
-                aria-hidden
-                className="h-3 w-3 shrink-0 rounded-full"
-                style={{ backgroundColor: category.color }}
-              />
-              <span className="truncate font-medium text-zinc-900 dark:text-zinc-100">
-                {category.name}
+    <ul className="divide-y divide-zinc-800 overflow-hidden rounded-xl border border-zinc-800 bg-surface-elevated">
+      {categories.map((category) => {
+        const taskCount = taskCountByCategoryId[category.id] ?? 0;
+
+        return (
+          <li key={category.id}>
+            <Link
+              href={`/categories/${category.id}`}
+              className="flex min-h-16 items-center justify-between gap-4 px-4 py-3 transition-colors duration-200 hover:bg-zinc-900/60 sm:px-5"
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                <CategoryColorDot color={category.color} size="lg" />
+                <div className="min-w-0">
+                  <span className="block truncate font-medium text-white">
+                    {category.name}
+                  </span>
+                  <span className="block text-xs text-zinc-500">
+                    {getCategoryColorLabel(category.color)}
+                  </span>
+                </div>
+              </div>
+              <span className="shrink-0 text-sm text-zinc-500">
+                {taskCount} task{taskCount === 1 ? "" : "s"}
               </span>
-            </div>
-            <span className="shrink-0 text-sm text-zinc-500 dark:text-zinc-400">
-              {taskCountByCategoryId[category.id] ?? 0} task
-              {(taskCountByCategoryId[category.id] ?? 0) === 1 ? "" : "s"}
-            </span>
-          </Link>
-        </li>
-      ))}
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

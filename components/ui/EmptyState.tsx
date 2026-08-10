@@ -19,7 +19,7 @@ export function EmptyState({
     >
       <div
         aria-hidden
-        className={`mb-4 flex items-center justify-center rounded-full bg-zinc-100 text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400 ${
+        className={`mb-4 flex items-center justify-center rounded-full bg-zinc-900 text-zinc-400 ${
           compact ? "h-10 w-10" : "h-12 w-12"
         }`}
       >
@@ -38,14 +38,14 @@ export function EmptyState({
         </svg>
       </div>
       <h2
-        className={`font-semibold text-zinc-900 dark:text-zinc-50 ${
+        className={`font-semibold text-white ${
           compact ? "text-sm" : "text-lg sm:text-xl"
         }`}
       >
         {title}
       </h2>
       <p
-        className={`mt-2 max-w-md leading-6 text-zinc-600 dark:text-zinc-400 ${
+        className={`mt-2 max-w-md leading-6 text-zinc-400 ${
           compact ? "text-xs" : "text-sm"
         }`}
       >

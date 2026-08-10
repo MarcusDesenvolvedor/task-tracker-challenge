@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import { CategorySelect } from "@/components/categories/CategorySelect";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FormAlert } from "@/components/ui/FormAlert";
 import { FormField, formInputClassName } from "@/components/ui/FormField";
-import { TASK_STATUS_LABELS, TASK_STATUS_OPTIONS } from "@/lib/constants/task";
 import type { TaskActionState } from "@/lib/actions/tasks";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
@@ -15,6 +15,7 @@ import {
   type TaskFormErrors,
   validateTaskInput,
 } from "@/lib/validation/task";
+import { TaskStatusSelect } from "./TaskStatusSelect";
 
 interface TaskFormProps {
   task?: Task;
@@ -27,6 +28,9 @@ interface TaskFormProps {
   cancelHref?: string;
   onCancel?: () => void;
   onSuccess?: () => void;
+  formId?: string;
+  /** Rendered before the submit label, for example a plus glyph on creation. */
+  submitIcon?: React.ReactNode;
 }
 
 const initialState: TaskActionState = {};
@@ -39,6 +43,8 @@ export function TaskForm({
   cancelHref,
   onCancel,
   onSuccess,
+  formId = "task-form",
+  submitIcon,
 }: TaskFormProps) {
   const [state, formAction, isPending] = useActionState(action, initialState);
   const [clientErrors, setClientErrors] = useState<TaskFormErrors>({});
@@ -71,11 +77,14 @@ export function TaskForm({
   const errors = { ...clientErrors, ...state.errors };
 
   return (
-    <form
-      action={handleSubmit}
-      className="space-y-6 rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 dark:border-zinc-800 dark:bg-zinc-950"
-    >
-      <FormField label="Title" htmlFor="title" error={errors.title} required>
+    <form id={formId} action={handleSubmit} className="space-y-4">
+      <FormField
+        card
+        label="Task title"
+        htmlFor="title"
+        error={errors.title}
+        required
+      >
         <input
           id="title"
           name="title"
@@ -83,68 +92,45 @@ export function TaskForm({
           defaultValue={task?.title ?? ""}
           required
           autoFocus={!task}
+          placeholder="e.g. Prepare Q3 presentation"
           className={formInputClassName(Boolean(errors.title))}
         />
       </FormField>
 
-      <FormField
-        label="Description"
-        htmlFor="description"
-        hint="Optional. Add context or notes for this task."
-      >
-        <textarea
-          id="description"
-          name="description"
-          rows={4}
-          defaultValue={task?.description ?? ""}
-          className={formInputClassName(false)}
-        />
-      </FormField>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <FormField label="Status" htmlFor="status">
-          <select
-            id="status"
-            name="status"
-            defaultValue={task?.status ?? "todo"}
-            className={formInputClassName(false)}
-          >
-            {TASK_STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {TASK_STATUS_LABELS[status]}
-              </option>
-            ))}
-          </select>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <FormField card label="Status" htmlFor="status">
+          <TaskStatusSelect defaultValue={task?.status ?? "todo"} />
         </FormField>
 
         <FormField
+          card
           label="Category"
           htmlFor="categoryId"
           error={errors.categoryId}
           required
         >
-          <select
-            id="categoryId"
-            name="categoryId"
-            defaultValue={task?.categoryId ?? ""}
-            required
-            className={formInputClassName(Boolean(errors.categoryId))}
-          >
-            <option value="" disabled>
-              Select a category
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+          <CategorySelect
+            categories={categories}
+            defaultValue={task?.categoryId ?? categories[0]?.id ?? ""}
+            hasError={Boolean(errors.categoryId)}
+          />
         </FormField>
       </div>
 
+      <FormField card label="Description" htmlFor="description">
+        <textarea
+          id="description"
+          name="description"
+          rows={6}
+          defaultValue={task?.description ?? ""}
+          placeholder="Add detailed notes, links, or sub-tasks here..."
+          className={`${formInputClassName(false)} min-h-[140px] resize-y`}
+        />
+      </FormField>
+
       {state.message ? <FormAlert>{state.message}</FormAlert> : null}
 
-      <div className="flex flex-col-reverse gap-3 border-t border-zinc-200 pt-5 sm:flex-row sm:items-center dark:border-zinc-800">
+      <div className="flex flex-col-reverse gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center">
         {cancelHref ? (
           <ButtonLink href={cancelHref} variant="secondary">
             Cancel
@@ -154,8 +140,17 @@ export function TaskForm({
             Cancel
           </Button>
         ) : null}
-        <Button type="submit" disabled={isPending} className="sm:ml-auto">
-          {isPending ? "Saving..." : submitLabel}
+        <Button
+          type="submit"
+          disabled={isPending}
+          className="gap-2 px-6 sm:ml-auto"
+        >
+          {isPending ? "Saving..." : (
+            <>
+              {submitIcon}
+              {submitLabel}
+            </>
+          )}
         </Button>
       </div>
     </form>

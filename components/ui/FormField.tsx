@@ -1,8 +1,8 @@
 export function formInputClassName(hasError: boolean) {
-  return `w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition-colors focus:ring-2 dark:bg-zinc-950 dark:text-zinc-100 ${
+  return `w-full rounded-lg border bg-surface-input px-3 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-zinc-600 focus:ring-2 ${
     hasError
-      ? "border-red-500 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-900"
-      : "border-zinc-300 focus:border-zinc-500 focus:ring-zinc-200 dark:border-zinc-700 dark:focus:border-zinc-500 dark:focus:ring-zinc-800"
+      ? "border-red-500 focus:border-red-500 focus:ring-red-900/40"
+      : "border-zinc-800 focus:border-zinc-600 focus:ring-zinc-800/80"
   }`;
 }
 
@@ -12,6 +12,8 @@ interface FormFieldProps {
   error?: string;
   required?: boolean;
   hint?: string;
+  /** Wraps the field in an elevated card, matching the task form layout. */
+  card?: boolean;
   children: React.ReactNode;
 }
 
@@ -21,6 +23,7 @@ export function FormField({
   error,
   required,
   hint,
+  card = false,
   children,
 }: FormFieldProps) {
   const errorId = error ? `${htmlFor}-error` : undefined;
@@ -28,24 +31,25 @@ export function FormField({
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <div>
+    <div
+      className={
+        card ? "rounded-xl border border-zinc-800/80 bg-surface-elevated p-4 sm:p-5" : ""
+      }
+    >
       <label
         htmlFor={htmlFor}
-        className="mb-2 block text-sm font-medium text-zinc-900 dark:text-zinc-100"
+        className="mb-3 block text-[11px] font-semibold uppercase tracking-wider text-zinc-500"
       >
         {label}
         {required ? (
-          <span className="text-red-600 dark:text-red-400" aria-hidden>
+          <span className="text-red-400" aria-hidden>
             {" "}
             *
           </span>
         ) : null}
       </label>
       {hint ? (
-        <p
-          id={hintId}
-          className="mb-2 text-xs leading-5 text-zinc-500 dark:text-zinc-400"
-        >
+        <p id={hintId} className="mb-3 text-xs leading-5 text-zinc-500">
           {hint}
         </p>
       ) : null}
@@ -53,11 +57,7 @@ export function FormField({
         {children}
       </div>
       {error ? (
-        <p
-          id={errorId}
-          className="mt-2 text-sm text-red-600 dark:text-red-400"
-          role="alert"
-        >
+        <p id={errorId} className="mt-2 text-sm text-red-400" role="alert">
           {error}
         </p>
       ) : null}

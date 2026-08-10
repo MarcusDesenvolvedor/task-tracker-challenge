@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { TASK_STATUS_LABELS } from "@/lib/constants/task";
+import { CategoryColorDot } from "@/components/categories/CategoryColorDot";
+import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 
@@ -19,40 +20,20 @@ export function TaskListItem({
       <Link
         href={`/tasks/${task.id}`}
         aria-current={isSelected ? "page" : undefined}
-        className={`block rounded-lg px-3 py-2.5 transition-colors ${
-          isSelected
-            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-            : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+        className={`block rounded-lg px-3 py-3 transition-colors duration-200 ${
+          isSelected ? "bg-zinc-900" : "hover:bg-zinc-900/50"
         }`}
       >
         <div className="flex items-start justify-between gap-3">
-          <span className="line-clamp-2 text-sm font-medium leading-5">
+          <span className="line-clamp-2 text-sm font-medium leading-5 text-white">
             {task.title}
           </span>
-          <span
-            className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-              isSelected
-                ? "bg-white/15 text-white dark:bg-zinc-900/10 dark:text-zinc-900"
-                : "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
-            }`}
-          >
-            {TASK_STATUS_LABELS[task.status]}
-          </span>
+          <StatusBadge status={task.status} />
         </div>
         {category ? (
-          <div className="mt-2 flex items-center gap-2 text-xs">
-            <span
-              aria-hidden
-              className="h-2 w-2 shrink-0 rounded-full"
-              style={{ backgroundColor: category.color }}
-            />
-            <span
-              className={
-                isSelected ? "text-white/80 dark:text-zinc-700" : "text-zinc-500"
-              }
-            >
-              {category.name}
-            </span>
+          <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
+            <CategoryColorDot color={category.color} size="sm" />
+            <span>{category.name}</span>
           </div>
         ) : null}
       </Link>

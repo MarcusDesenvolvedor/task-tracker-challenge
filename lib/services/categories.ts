@@ -46,14 +46,14 @@ export function getCategoryTaskCount(categoryId: string): number {
 
 export function createCategory(input: CategoryInput): Category {
   const errors = validateCategoryInput(input);
-  if (hasValidationErrors(errors)) {
+  if (hasValidationErrors(errors) || !input.color) {
     throw new CategoryValidationError(errors);
   }
 
   const category: Category = {
     id: createCategoryId(),
     name: input.name.trim(),
-    color: input.color.trim(),
+    color: input.color,
   };
 
   getStore().categories.push(category);
@@ -62,7 +62,7 @@ export function createCategory(input: CategoryInput): Category {
 
 export function updateCategory(id: string, input: CategoryInput): Category {
   const errors = validateCategoryInput(input);
-  if (hasValidationErrors(errors)) {
+  if (hasValidationErrors(errors) || !input.color) {
     throw new CategoryValidationError(errors);
   }
 
@@ -76,7 +76,7 @@ export function updateCategory(id: string, input: CategoryInput): Category {
   const updatedCategory: Category = {
     ...categories[index],
     name: input.name.trim(),
-    color: input.color.trim(),
+    color: input.color,
   };
 
   categories[index] = updatedCategory;

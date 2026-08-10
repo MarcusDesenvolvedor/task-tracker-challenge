@@ -1,8 +1,11 @@
-import type { Category } from "@/lib/types/category";
-import { DeleteCategoryButton } from "./DeleteCategoryButton";
-import { ButtonLink } from "@/components/ui/ButtonLink";
+import { BackLink } from "@/components/layout/BackLink";
 import { ContentHeader } from "@/components/layout/ContentHeader";
 import { ContentPanel } from "@/components/layout/ContentPanel";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { getCategoryColorLabel } from "@/lib/constants/category";
+import type { Category } from "@/lib/types/category";
+import { CategoryColorDot } from "./CategoryColorDot";
+import { DeleteCategoryButton } from "./DeleteCategoryButton";
 
 interface CategoryDetailViewProps {
   category: Category;
@@ -17,6 +20,7 @@ export function CategoryDetailView({
 }: CategoryDetailViewProps) {
   return (
     <ContentPanel>
+      <BackLink href="/categories" label="Back to Manage Categories" />
       <ContentHeader
         eyebrow="View category"
         title={category.name}
@@ -37,27 +41,21 @@ export function CategoryDetailView({
         }
       />
 
-      <dl className="grid gap-4 rounded-xl border border-zinc-200 bg-white p-4 sm:grid-cols-2 dark:border-zinc-800 dark:bg-zinc-950">
+      <dl className="grid gap-4 rounded-xl border border-zinc-800 bg-surface-elevated p-4 sm:grid-cols-2 sm:p-5">
         <div>
-          <dt className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
             Color
           </dt>
-          <dd className="mt-1.5 flex items-center gap-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">
-            <span
-              aria-hidden
-              className="h-4 w-4 rounded-full"
-              style={{ backgroundColor: category.color }}
-            />
-            {category.color}
+          <dd className="mt-2 flex items-center gap-2 text-sm font-medium text-white">
+            <CategoryColorDot color={category.color} size="lg" />
+            {getCategoryColorLabel(category.color)}
           </dd>
         </div>
         <div>
-          <dt className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
             Tasks
           </dt>
-          <dd className="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">
-            {taskCount}
-          </dd>
+          <dd className="mt-2 text-sm font-medium text-white">{taskCount}</dd>
         </div>
       </dl>
     </ContentPanel>

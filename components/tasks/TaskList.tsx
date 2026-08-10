@@ -30,7 +30,7 @@ export function TaskList({ tasks, categories }: TaskListProps) {
         action={
           <Link
             href="/tasks/new"
-            className="text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+            className="text-sm font-medium text-white underline-offset-4 hover:underline"
           >
             Create task
           </Link>

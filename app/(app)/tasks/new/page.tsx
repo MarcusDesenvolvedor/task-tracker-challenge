@@ -1,26 +1,39 @@
-import { BackLink } from "@/components/layout/BackLink";
 import { ContentHeader } from "@/components/layout/ContentHeader";
 import { ContentPanel } from "@/components/layout/ContentPanel";
 import { TaskForm } from "@/components/tasks/TaskForm";
+import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { PlusIcon } from "@/components/ui/PlusIcon";
 import { createTaskAction } from "@/lib/actions/tasks";
 import { getCategories } from "@/lib/services/categories";
+
+const FORM_ID = "create-task-form";
 
 export default function NewTaskPage() {
   const categories = getCategories();
 
   return (
-    <ContentPanel>
-      <BackLink href="/" label="Back to tasks" />
+    <ContentPanel wide>
       <ContentHeader
-        eyebrow="Create task"
-        title="New task"
-        description="Add a task and assign it to a category."
+        eyebrow="New task"
+        title="Create New Task"
+        actions={
+          <>
+            <ButtonLink href="/" variant="secondary">
+              Cancel
+            </ButtonLink>
+            <Button type="submit" form={FORM_ID}>
+              Save Task
+            </Button>
+          </>
+        }
       />
       <TaskForm
+        formId={FORM_ID}
         categories={categories}
         action={createTaskAction}
-        submitLabel="Create task"
-        cancelHref="/"
+        submitLabel="Create Task"
+        submitIcon={<PlusIcon />}
       />
     </ContentPanel>
   );

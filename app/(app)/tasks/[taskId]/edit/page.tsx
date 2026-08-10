@@ -22,7 +22,7 @@ export default async function EditTaskPage({
   const boundUpdateAction = updateTaskAction.bind(null, task.id);
 
   return (
-    <ContentPanel>
+    <ContentPanel wide>
       <BackLink href={`/tasks/${task.id}`} label="Back to task" />
       <ContentHeader
         eyebrow="Edit task"

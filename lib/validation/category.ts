@@ -1,6 +1,12 @@
+import {
+  CATEGORY_COLOR_NAMES,
+  isCategoryColorName,
+} from "@/lib/constants/category";
+import type { CategoryColorName } from "@/lib/types/category";
+
 export interface CategoryInput {
   name: string;
-  color: string;
+  color: CategoryColorName | "";
 }
 
 export interface CategoryFormErrors {
@@ -8,12 +14,12 @@ export interface CategoryFormErrors {
   color?: string;
 }
 
-const HEX_COLOR_PATTERN = /^#[0-9A-Fa-f]{6}$/;
-
 export function parseCategoryFormData(formData: FormData): CategoryInput {
+  const color = String(formData.get("color") ?? "").trim();
+
   return {
     name: String(formData.get("name") ?? ""),
-    color: String(formData.get("color") ?? ""),
+    color: isCategoryColorName(color) ? color : "",
   };
 }
 
@@ -24,10 +30,8 @@ export function validateCategoryInput(input: CategoryInput): CategoryFormErrors 
     errors.name = "Name is required.";
   }
 
-  if (!input.color.trim()) {
-    errors.color = "Color is required.";
-  } else if (!HEX_COLOR_PATTERN.test(input.color.trim())) {
-    errors.color = "Color must be a valid hex value (for example, #3b82f6).";
+  if (!input.color) {
+    errors.color = `Choose one of the available colors: ${CATEGORY_COLOR_NAMES.join(", ")}.`;
   }
 
   return errors;

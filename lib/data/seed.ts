@@ -2,9 +2,9 @@ import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 
 export const seedCategories: Category[] = [
-  { id: "cat-work", name: "Work", color: "#3b82f6" },
-  { id: "cat-personal", name: "Personal", color: "#22c55e" },
-  { id: "cat-shopping", name: "Shopping", color: "#f97316" },
+  { id: "cat-work", name: "Work", color: "blue" },
+  { id: "cat-personal", name: "Personal", color: "green" },
+  { id: "cat-shopping", name: "Shopping", color: "orange" },
 ];
 
 export const seedTasks: Task[] = [
@@ -34,5 +34,14 @@ export const seedTasks: Task[] = [
     categoryId: "cat-shopping",
     createdAt: "2026-08-10T08:00:00.000Z",
     updatedAt: "2026-08-10T08:00:00.000Z",
+  },
+  {
+    id: "task-4",
+    title: "Prepare Q3 presentation",
+    description: "Draft slides and gather metrics for the quarterly review.",
+    status: "todo",
+    categoryId: "cat-work",
+    createdAt: "2026-08-10T11:00:00.000Z",
+    updatedAt: "2026-08-10T11:00:00.000Z",
   },
 ];
