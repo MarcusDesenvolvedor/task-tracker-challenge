@@ -32,7 +32,18 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
     );
   }
 
-  let offset = 0;
+  const segments = items
+    .filter((item) => item.count > 0)
+    .map((item) => ({
+      item,
+      length: (item.count / total) * CIRCUMFERENCE,
+    }))
+    .map((segment, index, list) => ({
+      ...segment,
+      dashOffset: -list
+        .slice(0, index)
+        .reduce((sum, entry) => sum + entry.length, 0),
+    }));
 
   return (
     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -46,14 +57,7 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
             stroke="var(--border)"
             strokeWidth="12"
           />
-          {items.map((item) => {
-            if (item.count === 0) {
-              return null;
-            }
-
-            const length = (item.count / total) * CIRCUMFERENCE;
-            const dashOffset = -offset;
-            offset += length;
+          {segments.map(({ item, length, dashOffset }) => {
             const status = item.id as TaskStatus;
 
             return (

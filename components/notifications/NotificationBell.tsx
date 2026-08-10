@@ -28,13 +28,24 @@ const KIND_LABELS: Record<AppNotification["kind"], string> = {
   overdue: "Overdue",
 };
 
+function readInitialPermission(): NotificationPermission {
+  if (typeof Notification === "undefined") {
+    return "default";
+  }
+
+  return Notification.permission;
+}
+
 export function NotificationBell({ tasks }: NotificationBellProps) {
   const panelId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<AppNotification[]>([]);
-  const [permission, setPermission] =
-    useState<NotificationPermission>("default");
+  const [notifications, setNotifications] = useState<AppNotification[]>(() =>
+    typeof window === "undefined" ? [] : readNotificationHistory(),
+  );
+  const [permission, setPermission] = useState<NotificationPermission>(
+    readInitialPermission,
+  );
   const [isRequesting, setIsRequesting] = useState(false);
 
   const refreshHistory = useCallback(() => {
@@ -51,16 +62,16 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
   }, [tasks, refreshHistory]);
 
   useEffect(() => {
-    if (typeof Notification !== "undefined") {
-      setPermission(Notification.permission);
-    }
-
-    refreshHistory();
-    runDueCheck();
-
+    const frame = requestAnimationFrame(() => {
+      runDueCheck();
+    });
     const intervalId = window.setInterval(runDueCheck, CHECK_INTERVAL_MS);
-    return () => window.clearInterval(intervalId);
-  }, [refreshHistory, runDueCheck]);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearInterval(intervalId);
+    };
+  }, [runDueCheck]);
 
   useEffect(() => {
     if (!isOpen) {

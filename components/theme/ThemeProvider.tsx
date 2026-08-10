@@ -6,7 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
 } from "react";
 import {
   applyTheme,
@@ -24,28 +24,51 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+const THEME_CHANGE_EVENT = "task-tracker:theme-change";
+
+function subscribeToTheme(onStoreChange: () => void): () => void {
+  window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+function getThemeSnapshot(): Theme {
+  return resolveTheme(readStoredTheme());
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "dark";
+}
+
+function emitThemeChange(): void {
+  window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
   useEffect(() => {
-    const initial = resolveTheme(readStoredTheme());
-    setThemeState(initial);
-    applyTheme(initial);
-  }, []);
+    applyTheme(theme);
+  }, [theme]);
 
   const setTheme = useCallback((next: Theme) => {
-    setThemeState(next);
-    applyTheme(next);
     persistTheme(next);
+    applyTheme(next);
+    emitThemeChange();
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((current) => {
-      const next: Theme = current === "dark" ? "light" : "dark";
-      applyTheme(next);
-      persistTheme(next);
-      return next;
-    });
+    const next: Theme = getThemeSnapshot() === "dark" ? "light" : "dark";
+    persistTheme(next);
+    applyTheme(next);
+    emitThemeChange();
   }, []);
 
   const value = useMemo(

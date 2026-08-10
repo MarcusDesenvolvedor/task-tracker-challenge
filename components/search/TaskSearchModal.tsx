@@ -37,7 +37,6 @@ export function TaskSearchModal({
       return;
     }
 
-    setQuery("");
     const frame = requestAnimationFrame(() => inputRef.current?.focus());
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";

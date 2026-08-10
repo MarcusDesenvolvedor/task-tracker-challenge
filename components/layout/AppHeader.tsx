@@ -15,14 +15,19 @@ interface AppHeaderProps {
 
 export function AppHeader({ tasks, categories }: AppHeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchSession, setSearchSession] = useState(0);
 
-  const openSearch = useCallback(() => setIsSearchOpen(true), []);
+  const openSearch = useCallback(() => {
+    setSearchSession((current) => current + 1);
+    setIsSearchOpen(true);
+  }, []);
   const closeSearch = useCallback(() => setIsSearchOpen(false), []);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
+        setSearchSession((current) => current + 1);
         setIsSearchOpen(true);
       }
     }
@@ -57,6 +62,7 @@ export function AppHeader({ tasks, categories }: AppHeaderProps) {
       </header>
 
       <TaskSearchModal
+        key={searchSession}
         open={isSearchOpen}
         onClose={closeSearch}
         tasks={tasks}

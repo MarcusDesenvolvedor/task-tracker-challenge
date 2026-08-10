@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   TASK_STATUS_COLOR_HEX,
   TASK_STATUS_LABELS,
@@ -15,35 +15,30 @@ interface QuickTaskStatusProps {
 }
 
 export function QuickTaskStatus({ taskId, status }: QuickTaskStatusProps) {
-  const [currentStatus, setCurrentStatus] = useState(status);
+  const [optimisticStatus, setOptimisticStatus] = useState<TaskStatus | null>(
+    null,
+  );
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    setCurrentStatus(status);
-  }, [status]);
+  const currentStatus =
+    isPending && optimisticStatus ? optimisticStatus : status;
 
   function handleChange(nextStatus: TaskStatus) {
     if (nextStatus === currentStatus || isPending) {
       return;
     }
 
-    const previousStatus = currentStatus;
-    setCurrentStatus(nextStatus);
+    setOptimisticStatus(nextStatus);
     setError(undefined);
 
     startTransition(async () => {
       const result = await updateTaskStatusAction(taskId, nextStatus);
 
       if (result.message) {
-        setCurrentStatus(previousStatus);
         setError(result.message);
-        return;
       }
 
-      if (result.status) {
-        setCurrentStatus(result.status);
-      }
+      setOptimisticStatus(null);
     });
   }
 
@@ -80,10 +75,7 @@ export function QuickTaskStatus({ taskId, status }: QuickTaskStatusProps) {
           );
         })}
       </div>
-      <p
-        className="mt-2 min-h-4 text-xs text-muted"
-        aria-live="polite"
-      >
+      <p className="mt-2 min-h-4 text-xs text-muted" aria-live="polite">
         {error ? (
           <span className="text-red-400">{error}</span>
         ) : isPending ? (
