@@ -3,6 +3,7 @@ import { ContentHeader } from "@/components/layout/ContentHeader";
 import { ContentPanel } from "@/components/layout/ContentPanel";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { getCategoryColorLabel } from "@/lib/constants/category";
+import { formatDateTime } from "@/lib/format/date";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 import { DeleteTaskButton } from "./DeleteTaskButton";
@@ -54,6 +55,22 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
             ) : (
               "Uncategorized"
             )}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+            Created
+          </dt>
+          <dd className="mt-2 text-sm font-medium text-white">
+            <time dateTime={task.createdAt}>{formatDateTime(task.createdAt)}</time>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+            Last updated
+          </dt>
+          <dd className="mt-2 text-sm font-medium text-white">
+            <time dateTime={task.updatedAt}>{formatDateTime(task.updatedAt)}</time>
           </dd>
         </div>
       </dl>

@@ -4,18 +4,20 @@ import { ContentPanel } from "@/components/layout/ContentPanel";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { getCategoryColorLabel } from "@/lib/constants/category";
 import type { Category } from "@/lib/types/category";
+import type { Task } from "@/lib/types/task";
 import { CategoryColorDot } from "./CategoryColorDot";
+import { CategoryTasksList } from "./CategoryTasksList";
 import { DeleteCategoryButton } from "./DeleteCategoryButton";
 
 interface CategoryDetailViewProps {
   category: Category;
-  taskCount: number;
+  tasks: Task[];
   deleteBlockReason?: string | null;
 }
 
 export function CategoryDetailView({
   category,
-  taskCount,
+  tasks,
   deleteBlockReason,
 }: CategoryDetailViewProps) {
   return (
@@ -55,9 +57,18 @@ export function CategoryDetailView({
           <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
             Tasks
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">{taskCount}</dd>
+          <dd className="mt-2 text-sm font-medium text-white">
+            {tasks.length}
+          </dd>
         </div>
       </dl>
+
+      <section className="mt-4">
+        <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          Linked tasks
+        </h2>
+        <CategoryTasksList tasks={tasks} categoryName={category.name} />
+      </section>
     </ContentPanel>
   );
 }
