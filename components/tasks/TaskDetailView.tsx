@@ -43,7 +43,18 @@ export function TaskDetailView({ task, category, onEdit }: TaskDetailViewProps) 
           <div>
             <dt className="text-zinc-500 dark:text-zinc-400">Category</dt>
             <dd className="mt-1 font-medium text-zinc-900 dark:text-zinc-100">
-              {category?.name ?? "Uncategorized"}
+              {category ? (
+                <span className="inline-flex items-center gap-2">
+                  <span
+                    aria-hidden
+                    className="h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: category.color }}
+                  />
+                  {category.name}
+                </span>
+              ) : (
+                "Uncategorized"
+              )}
             </dd>
           </div>
         </dl>
