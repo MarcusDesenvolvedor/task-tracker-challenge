@@ -3,6 +3,8 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FormAlert } from "@/components/ui/FormAlert";
+import { FormField, formInputClassName } from "@/components/ui/FormField";
 import { TASK_STATUS_LABELS, TASK_STATUS_OPTIONS } from "@/lib/constants/task";
 import type { TaskActionState } from "@/lib/actions/tasks";
 import type { Category } from "@/lib/types/category";
@@ -69,35 +71,43 @@ export function TaskForm({
   const errors = { ...clientErrors, ...state.errors };
 
   return (
-    <form action={handleSubmit} className="space-y-5">
-      <Field label="Title" htmlFor="title" error={errors.title} required>
+    <form
+      action={handleSubmit}
+      className="space-y-6 rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 dark:border-zinc-800 dark:bg-zinc-950"
+    >
+      <FormField label="Title" htmlFor="title" error={errors.title} required>
         <input
           id="title"
           name="title"
           type="text"
           defaultValue={task?.title ?? ""}
           required
-          className={inputClassName(Boolean(errors.title))}
+          autoFocus={!task}
+          className={formInputClassName(Boolean(errors.title))}
         />
-      </Field>
+      </FormField>
 
-      <Field label="Description" htmlFor="description">
+      <FormField
+        label="Description"
+        htmlFor="description"
+        hint="Optional. Add context or notes for this task."
+      >
         <textarea
           id="description"
           name="description"
           rows={4}
           defaultValue={task?.description ?? ""}
-          className={inputClassName(false)}
+          className={formInputClassName(false)}
         />
-      </Field>
+      </FormField>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Status" htmlFor="status">
+      <div className="grid gap-6 sm:grid-cols-2">
+        <FormField label="Status" htmlFor="status">
           <select
             id="status"
             name="status"
             defaultValue={task?.status ?? "todo"}
-            className={inputClassName(false)}
+            className={formInputClassName(false)}
           >
             {TASK_STATUS_OPTIONS.map((status) => (
               <option key={status} value={status}>
@@ -105,9 +115,9 @@ export function TaskForm({
               </option>
             ))}
           </select>
-        </Field>
+        </FormField>
 
-        <Field
+        <FormField
           label="Category"
           htmlFor="categoryId"
           error={errors.categoryId}
@@ -118,7 +128,7 @@ export function TaskForm({
             name="categoryId"
             defaultValue={task?.categoryId ?? ""}
             required
-            className={inputClassName(Boolean(errors.categoryId))}
+            className={formInputClassName(Boolean(errors.categoryId))}
           >
             <option value="" disabled>
               Select a category
@@ -129,19 +139,12 @@ export function TaskForm({
               </option>
             ))}
           </select>
-        </Field>
+        </FormField>
       </div>
 
-      {state.message ? (
-        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-          {state.message}
-        </p>
-      ) : null}
+      {state.message ? <FormAlert>{state.message}</FormAlert> : null}
 
-      <div className="flex flex-wrap gap-3">
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Saving..." : submitLabel}
-        </Button>
+      <div className="flex flex-col-reverse gap-3 border-t border-zinc-200 pt-5 sm:flex-row sm:items-center dark:border-zinc-800">
         {cancelHref ? (
           <ButtonLink href={cancelHref} variant="secondary">
             Cancel
@@ -151,45 +154,10 @@ export function TaskForm({
             Cancel
           </Button>
         ) : null}
+        <Button type="submit" disabled={isPending} className="sm:ml-auto">
+          {isPending ? "Saving..." : submitLabel}
+        </Button>
       </div>
     </form>
-  );
-}
-
-function inputClassName(hasError: boolean) {
-  return `w-full rounded-lg border bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors focus:ring-2 dark:bg-zinc-950 dark:text-zinc-100 ${
-    hasError
-      ? "border-red-500 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-900"
-      : "border-zinc-300 focus:border-zinc-500 focus:ring-zinc-200 dark:border-zinc-700 dark:focus:border-zinc-500 dark:focus:ring-zinc-800"
-  }`;
-}
-
-interface FieldProps {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  required?: boolean;
-  children: React.ReactNode;
-}
-
-function Field({ label, htmlFor, error, required, children }: FieldProps) {
-  return (
-    <div>
-      <label
-        htmlFor={htmlFor}
-        className="mb-2 block text-sm font-medium text-zinc-900 dark:text-zinc-100"
-      >
-        {label}
-        {required ? (
-          <span className="text-red-600 dark:text-red-400"> *</span>
-        ) : null}
-      </label>
-      {children}
-      {error ? (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400" role="alert">
-          {error}
-        </p>
-      ) : null}
-    </div>
   );
 }

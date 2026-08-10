@@ -11,7 +11,7 @@ interface AppShellProps {
 
 export function AppShell({ tasks, categories, children }: AppShellProps) {
   return (
-    <div className="flex min-h-full flex-1">
+    <div className="flex min-h-full flex-1 flex-col lg:flex-row">
       <Sidebar tasks={tasks} categories={categories} />
       <MainContent>{children}</MainContent>
     </div>

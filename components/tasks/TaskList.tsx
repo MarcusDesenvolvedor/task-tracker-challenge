@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { getSelectedTaskId } from "@/lib/navigation/pathnames";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
@@ -21,14 +23,24 @@ export function TaskList({ tasks, categories }: TaskListProps) {
 
   if (tasks.length === 0) {
     return (
-      <p className="px-4 py-8 text-sm text-zinc-500 dark:text-zinc-400">
-        No tasks yet.
-      </p>
+      <EmptyState
+        compact
+        title="No tasks yet"
+        description="Create your first task to start tracking work."
+        action={
+          <Link
+            href="/tasks/new"
+            className="text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            Create task
+          </Link>
+        }
+      />
     );
   }
 
   return (
-    <ul className="flex flex-col gap-1 p-2">
+    <ul className="flex flex-col gap-0.5 px-2 sm:px-3">
       {tasks.map((task) => (
         <TaskListItem
           key={task.id}

@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/Button";
 
 interface DeleteTaskButtonProps {
   taskId: string;
+  taskTitle: string;
 }
 
-export function DeleteTaskButton({ taskId }: DeleteTaskButtonProps) {
+export function DeleteTaskButton({ taskId, taskTitle }: DeleteTaskButtonProps) {
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {
     const confirmed = window.confirm(
-      "Delete this task? This action cannot be undone.",
+      `Delete "${taskTitle}"?\n\nThis action cannot be undone.`,
     );
 
     if (!confirmed) {

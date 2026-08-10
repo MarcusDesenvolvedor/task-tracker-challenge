@@ -3,6 +3,8 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FormAlert } from "@/components/ui/FormAlert";
+import { FormField, formInputClassName } from "@/components/ui/FormField";
 import type { CategoryActionState } from "@/lib/actions/categories";
 import type { Category } from "@/lib/types/category";
 import {
@@ -69,26 +71,37 @@ export function CategoryForm({
   const errors = { ...clientErrors, ...state.errors };
 
   return (
-    <form action={handleSubmit} className="space-y-5">
-      <Field label="Name" htmlFor="name" error={errors.name} required>
+    <form
+      action={handleSubmit}
+      className="space-y-6 rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 dark:border-zinc-800 dark:bg-zinc-950"
+    >
+      <FormField label="Name" htmlFor="name" error={errors.name} required>
         <input
           id="name"
           name="name"
           type="text"
           defaultValue={category?.name ?? ""}
           required
-          className={inputClassName(Boolean(errors.name))}
+          autoFocus={!category}
+          className={formInputClassName(Boolean(errors.name))}
         />
-      </Field>
+      </FormField>
 
-      <Field label="Color" htmlFor="color-text" error={errors.color} required>
+      <FormField
+        label="Color"
+        htmlFor="color-text"
+        error={errors.color}
+        required
+        hint="Pick a color or enter a hex value (for example, #3b82f6)."
+      >
         <div className="flex items-center gap-3">
           <input
             id="color-picker"
             type="color"
             value={color}
             onChange={(event) => setColor(event.target.value)}
-            className="h-10 w-14 cursor-pointer rounded border border-zinc-300 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-950"
+            aria-label="Color picker"
+            className="h-11 w-14 cursor-pointer rounded-lg border border-zinc-300 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-950"
           />
           <input
             id="color-text"
@@ -98,21 +111,14 @@ export function CategoryForm({
             onChange={(event) => setColor(event.target.value)}
             pattern="^#[0-9A-Fa-f]{6}$"
             required
-            className={inputClassName(Boolean(errors.color))}
+            className={formInputClassName(Boolean(errors.color))}
           />
         </div>
-      </Field>
+      </FormField>
 
-      {state.message ? (
-        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-          {state.message}
-        </p>
-      ) : null}
+      {state.message ? <FormAlert>{state.message}</FormAlert> : null}
 
-      <div className="flex flex-wrap gap-3">
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Saving..." : submitLabel}
-        </Button>
+      <div className="flex flex-col-reverse gap-3 border-t border-zinc-200 pt-5 sm:flex-row sm:items-center dark:border-zinc-800">
         {cancelHref ? (
           <ButtonLink href={cancelHref} variant="secondary">
             Cancel
@@ -122,45 +128,10 @@ export function CategoryForm({
             Cancel
           </Button>
         ) : null}
+        <Button type="submit" disabled={isPending} className="sm:ml-auto">
+          {isPending ? "Saving..." : submitLabel}
+        </Button>
       </div>
     </form>
-  );
-}
-
-function inputClassName(hasError: boolean) {
-  return `w-full rounded-lg border bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors focus:ring-2 dark:bg-zinc-950 dark:text-zinc-100 ${
-    hasError
-      ? "border-red-500 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-900"
-      : "border-zinc-300 focus:border-zinc-500 focus:ring-zinc-200 dark:border-zinc-700 dark:focus:border-zinc-500 dark:focus:ring-zinc-800"
-  }`;
-}
-
-interface FieldProps {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  required?: boolean;
-  children: React.ReactNode;
-}
-
-function Field({ label, htmlFor, error, required, children }: FieldProps) {
-  return (
-    <div>
-      <label
-        htmlFor={htmlFor}
-        className="mb-2 block text-sm font-medium text-zinc-900 dark:text-zinc-100"
-      >
-        {label}
-        {required ? (
-          <span className="text-red-600 dark:text-red-400"> *</span>
-        ) : null}
-      </label>
-      {children}
-      {error ? (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400" role="alert">
-          {error}
-        </p>
-      ) : null}
-    </div>
   );
 }

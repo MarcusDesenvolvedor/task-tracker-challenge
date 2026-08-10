@@ -18,16 +18,19 @@ export function TaskListItem({
     <li>
       <Link
         href={`/tasks/${task.id}`}
-        className={`block rounded-lg px-3 py-2 transition-colors ${
+        aria-current={isSelected ? "page" : undefined}
+        className={`block rounded-lg px-3 py-2.5 transition-colors ${
           isSelected
             ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
             : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
         }`}
       >
         <div className="flex items-start justify-between gap-3">
-          <span className="line-clamp-2 text-sm font-medium">{task.title}</span>
+          <span className="line-clamp-2 text-sm font-medium leading-5">
+            {task.title}
+          </span>
           <span
-            className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide ${
+            className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
               isSelected
                 ? "bg-white/15 text-white dark:bg-zinc-900/10 dark:text-zinc-900"
                 : "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
@@ -40,10 +43,14 @@ export function TaskListItem({
           <div className="mt-2 flex items-center gap-2 text-xs">
             <span
               aria-hidden
-              className="h-2 w-2 rounded-full"
+              className="h-2 w-2 shrink-0 rounded-full"
               style={{ backgroundColor: category.color }}
             />
-            <span className={isSelected ? "text-white/80 dark:text-zinc-700" : "text-zinc-500"}>
+            <span
+              className={
+                isSelected ? "text-white/80 dark:text-zinc-700" : "text-zinc-500"
+              }
+            >
               {category.name}
             </span>
           </div>

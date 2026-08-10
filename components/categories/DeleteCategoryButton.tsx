@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 
 interface DeleteCategoryButtonProps {
   categoryId: string;
+  categoryName: string;
   blockReason?: string | null;
 }
 
@@ -16,6 +17,7 @@ interface TooltipPosition {
 
 export function DeleteCategoryButton({
   categoryId,
+  categoryName,
   blockReason,
 }: DeleteCategoryButtonProps) {
   const [isPending, startTransition] = useTransition();
@@ -32,7 +34,7 @@ export function DeleteCategoryButton({
     }
 
     const confirmed = window.confirm(
-      "Delete this category? This action cannot be undone.",
+      `Delete "${categoryName}"?\n\nThis action cannot be undone.`,
     );
 
     if (!confirmed) {

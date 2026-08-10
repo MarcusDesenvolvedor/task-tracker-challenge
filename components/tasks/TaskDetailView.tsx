@@ -22,21 +22,25 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
             <ButtonLink href={`/tasks/${task.id}/edit`} variant="secondary">
               Edit
             </ButtonLink>
-            <DeleteTaskButton taskId={task.id} />
+            <DeleteTaskButton taskId={task.id} taskTitle={task.title} />
           </>
         }
       />
 
-      <dl className="flex flex-wrap gap-4 border-b border-zinc-200 pb-6 text-sm dark:border-zinc-800">
+      <dl className="grid gap-4 rounded-xl border border-zinc-200 bg-white p-4 sm:grid-cols-2 dark:border-zinc-800 dark:bg-zinc-950">
         <div>
-          <dt className="text-zinc-500 dark:text-zinc-400">Status</dt>
-          <dd className="mt-1 font-medium text-zinc-900 dark:text-zinc-100">
+          <dt className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Status
+          </dt>
+          <dd className="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">
             {TASK_STATUS_LABELS[task.status]}
           </dd>
         </div>
         <div>
-          <dt className="text-zinc-500 dark:text-zinc-400">Category</dt>
-          <dd className="mt-1 font-medium text-zinc-900 dark:text-zinc-100">
+          <dt className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Category
+          </dt>
+          <dd className="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">
             {category ? (
               <span className="inline-flex items-center gap-2">
                 <span
@@ -53,11 +57,11 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
         </div>
       </dl>
 
-      <section className="py-6">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+      <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-950">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
           Description
         </h2>
-        <p className="mt-3 whitespace-pre-wrap text-base leading-7 text-zinc-700 dark:text-zinc-300">
+        <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-zinc-700 sm:text-base dark:text-zinc-300">
           {task.description || "No description provided."}
         </p>
       </section>
