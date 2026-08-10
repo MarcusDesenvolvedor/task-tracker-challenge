@@ -9,6 +9,11 @@ function atLocalHour(daysFromToday: number, hour: number, minute = 0): string {
   return date.toISOString();
 }
 
+/** Relative timestamp so due notifications always trigger in local demos. */
+function fromNow(minutes: number): string {
+  return new Date(Date.now() + minutes * 60_000).toISOString();
+}
+
 export const seedCategories: Category[] = [
   { id: "cat-work", name: "Work", color: "blue" },
   { id: "cat-personal", name: "Personal", color: "green" },
@@ -32,9 +37,10 @@ export const seedTasks: Task[] = [
     description: "Create types, services, layout shell, and placeholder pages.",
     status: "in_progress",
     categoryId: "cat-work",
-    dueAt: atLocalHour(0, 18),
+    // Due soon: within the next hour so the bell fires immediately.
+    dueAt: fromNow(25),
     createdAt: atLocalHour(-1, 10, 30),
-    updatedAt: atLocalHour(0, 11),
+    updatedAt: fromNow(-5),
   },
   {
     id: "task-3",
@@ -42,7 +48,8 @@ export const seedTasks: Task[] = [
     description: "Milk, eggs, bread, and coffee.",
     status: "todo",
     categoryId: "cat-shopping",
-    dueAt: atLocalHour(0, 20),
+    // Already overdue so an overdue notification appears on load.
+    dueAt: fromNow(-20),
     createdAt: atLocalHour(0, 8),
     updatedAt: atLocalHour(0, 8),
   },
@@ -52,7 +59,7 @@ export const seedTasks: Task[] = [
     description: "Draft slides and gather metrics for the quarterly review.",
     status: "todo",
     categoryId: "cat-work",
-    dueAt: atLocalHour(2, 15),
+    dueAt: fromNow(90),
     createdAt: atLocalHour(0, 11),
     updatedAt: atLocalHour(0, 11),
   },
@@ -112,7 +119,8 @@ export const seedTasks: Task[] = [
     description: "Centralize due date parsing helpers.",
     status: "in_progress",
     categoryId: "cat-work",
-    dueAt: atLocalHour(1, 14),
+    // Second overdue item so the panel shows more than one alert.
+    dueAt: fromNow(-45),
     createdAt: atLocalHour(-4, 11),
     updatedAt: atLocalHour(-1, 13),
   },

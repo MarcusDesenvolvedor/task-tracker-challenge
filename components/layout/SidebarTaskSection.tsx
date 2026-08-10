@@ -18,7 +18,8 @@ interface TaskGroupProps {
   tasks: Task[];
   categories: Category[];
   showStatus?: boolean;
-  defaultExpanded?: boolean;
+  isExpanded: boolean;
+  onToggle: () => void;
 }
 
 function TaskGroup({
@@ -27,9 +28,9 @@ function TaskGroup({
   tasks,
   categories,
   showStatus = true,
-  defaultExpanded = true,
+  isExpanded,
+  onToggle,
 }: TaskGroupProps) {
-  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const listId = `sidebar-tasks-${id}`;
 
   return (
@@ -37,7 +38,7 @@ function TaskGroup({
       <div className="shrink-0 px-3">
         <button
           type="button"
-          onClick={() => setIsExpanded((expanded) => !expanded)}
+          onClick={onToggle}
           aria-expanded={isExpanded}
           aria-controls={listId}
           className={`flex min-h-10 w-full items-center gap-2 rounded-lg border px-3 py-2 text-[11px] font-semibold uppercase tracking-wider transition-colors ${
@@ -91,12 +92,18 @@ export function SidebarTaskSection({
   tasks,
   categories,
 }: SidebarTaskSectionProps) {
+  const [openGroupId, setOpenGroupId] = useState<string | null>("all");
+
   const tasksByStatus = Object.fromEntries(
     TASK_STATUS_OPTIONS.map((status) => [
       status,
       tasks.filter((task) => task.status === status),
     ]),
   ) as Record<TaskStatus, Task[]>;
+
+  function handleToggle(groupId: string) {
+    setOpenGroupId((current) => (current === groupId ? null : groupId));
+  }
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto pt-3">
@@ -106,7 +113,8 @@ export function SidebarTaskSection({
         tasks={tasks}
         categories={categories}
         showStatus
-        defaultExpanded
+        isExpanded={openGroupId === "all"}
+        onToggle={() => handleToggle("all")}
       />
       {TASK_STATUS_OPTIONS.map((status) => (
         <TaskGroup
@@ -116,7 +124,8 @@ export function SidebarTaskSection({
           tasks={tasksByStatus[status]}
           categories={categories}
           showStatus={false}
-          defaultExpanded
+          isExpanded={openGroupId === status}
+          onToggle={() => handleToggle(status)}
         />
       ))}
     </div>

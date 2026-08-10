@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { TaskSearchModal } from "@/components/search/TaskSearchModal";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 import type { Category } from "@/lib/types/category";
@@ -32,18 +33,24 @@ export function AppHeader({ tasks, categories }: AppHeaderProps) {
   return (
     <>
       <header className="sticky top-0 z-20 shrink-0 border-b border-zinc-800 bg-black/90 backdrop-blur-sm">
-        <div className="flex h-14 items-center justify-center px-4 sm:px-6 lg:px-10">
-          <button
-            type="button"
-            onClick={openSearch}
-            className="flex h-10 w-full max-w-md items-center gap-2.5 rounded-lg border border-zinc-800 bg-surface-elevated px-3 text-left text-sm text-zinc-500 transition-colors hover:border-zinc-700 hover:text-zinc-300"
-          >
-            <SearchIcon />
-            <span className="flex-1 truncate">Search tasks…</span>
-            <kbd className="hidden shrink-0 rounded-md border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 sm:inline">
-              ⌘K
-            </kbd>
-          </button>
+        <div className="relative flex h-14 items-center px-4 sm:px-6 lg:px-10">
+          <div className="mx-auto w-full max-w-md">
+            <button
+              type="button"
+              onClick={openSearch}
+              className="flex h-10 w-full items-center gap-2.5 rounded-lg border border-zinc-800 bg-surface-elevated px-3 text-left text-sm text-zinc-500 transition-colors hover:border-zinc-700 hover:text-zinc-300"
+            >
+              <SearchIcon />
+              <span className="flex-1 truncate">Search tasks…</span>
+              <kbd className="hidden shrink-0 rounded-md border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 sm:inline">
+                ⌘K
+              </kbd>
+            </button>
+          </div>
+
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 sm:right-6 lg:right-10">
+            <NotificationBell tasks={tasks} />
+          </div>
         </div>
       </header>
 
