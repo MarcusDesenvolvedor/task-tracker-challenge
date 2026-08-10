@@ -28,24 +28,14 @@ const KIND_LABELS: Record<AppNotification["kind"], string> = {
   overdue: "Overdue",
 };
 
-function readInitialPermission(): NotificationPermission {
-  if (typeof Notification === "undefined") {
-    return "default";
-  }
-
-  return Notification.permission;
-}
-
 export function NotificationBell({ tasks }: NotificationBellProps) {
   const panelId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<AppNotification[]>(() =>
-    typeof window === "undefined" ? [] : readNotificationHistory(),
-  );
-  const [permission, setPermission] = useState<NotificationPermission>(
-    readInitialPermission,
-  );
+  // Empty until mount so SSR HTML matches the first client render.
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [permission, setPermission] =
+    useState<NotificationPermission>("default");
   const [isRequesting, setIsRequesting] = useState(false);
 
   const refreshHistory = useCallback(() => {
@@ -62,6 +52,12 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
   }, [tasks, refreshHistory]);
 
   useEffect(() => {
+    if (typeof Notification !== "undefined") {
+      setPermission(Notification.permission);
+    }
+
+    refreshHistory();
+
     const frame = requestAnimationFrame(() => {
       runDueCheck();
     });
@@ -71,7 +67,7 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
       cancelAnimationFrame(frame);
       window.clearInterval(intervalId);
     };
-  }, [runDueCheck]);
+  }, [runDueCheck, refreshHistory]);
 
   useEffect(() => {
     if (!isOpen) {
