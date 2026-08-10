@@ -11,9 +11,14 @@ import { TaskListItem } from "./TaskListItem";
 interface TaskListProps {
   tasks: Task[];
   categories: Category[];
+  showStatus?: boolean;
 }
 
-export function TaskList({ tasks, categories }: TaskListProps) {
+export function TaskList({
+  tasks,
+  categories,
+  showStatus = true,
+}: TaskListProps) {
   const pathname = usePathname();
   const selectedTaskId = getSelectedTaskId(pathname);
 
@@ -47,6 +52,7 @@ export function TaskList({ tasks, categories }: TaskListProps) {
           task={task}
           category={categoryById.get(task.categoryId)}
           isSelected={task.id === selectedTaskId}
+          showStatus={showStatus}
         />
       ))}
     </ul>

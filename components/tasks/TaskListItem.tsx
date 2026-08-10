@@ -8,12 +8,14 @@ interface TaskListItemProps {
   task: Task;
   category?: Category;
   isSelected?: boolean;
+  showStatus?: boolean;
 }
 
 export function TaskListItem({
   task,
   category,
   isSelected = false,
+  showStatus = true,
 }: TaskListItemProps) {
   return (
     <li>
@@ -28,7 +30,7 @@ export function TaskListItem({
           <span className="line-clamp-2 text-sm font-medium leading-5 text-white">
             {task.title}
           </span>
-          <StatusBadge status={task.status} />
+          {showStatus ? <StatusBadge status={task.status} /> : null}
         </div>
         {category ? (
           <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">

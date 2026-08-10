@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SidebarTaskSection } from "@/components/layout/SidebarTaskSection";
-import { isCategoriesSection } from "@/lib/navigation/pathnames";
+import { HomeIcon } from "@/components/ui/HomeIcon";
+import {
+  isCategoriesSection,
+  isOverviewRoute,
+} from "@/lib/navigation/pathnames";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 
@@ -12,9 +16,18 @@ interface SidebarProps {
   categories: Category[];
 }
 
+function navItemClassName(isActive: boolean): string {
+  return `flex min-h-10 w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+    isActive
+      ? "bg-zinc-900 text-white"
+      : "text-zinc-400 hover:bg-zinc-900/60 hover:text-white"
+  }`;
+}
+
 export function Sidebar({ tasks, categories }: SidebarProps) {
   const pathname = usePathname();
   const isCategoriesActive = isCategoriesSection(pathname);
+  const isOverviewActive = isOverviewRoute(pathname);
   const isNewTaskActive = pathname === "/tasks/new";
 
   return (
@@ -47,6 +60,17 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
         </div>
       </div>
 
+      <nav aria-label="Main" className="shrink-0 px-3 pt-3">
+        <Link
+          href="/"
+          aria-current={isOverviewActive ? "page" : undefined}
+          className={navItemClassName(isOverviewActive)}
+        >
+          <HomeIcon />
+          Overview
+        </Link>
+      </nav>
+
       <SidebarTaskSection tasks={tasks} categories={categories} />
 
       <nav
@@ -55,11 +79,8 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
       >
         <Link
           href="/categories"
-          className={`flex min-h-10 w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-            isCategoriesActive
-              ? "bg-zinc-900 text-white"
-              : "text-zinc-400 hover:bg-zinc-900/60 hover:text-white"
-          }`}
+          aria-current={isCategoriesActive ? "page" : undefined}
+          className={navItemClassName(isCategoriesActive)}
         >
           <GearIcon />
           Manage categories

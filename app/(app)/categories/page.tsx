@@ -19,7 +19,7 @@ export default function CategoriesPage() {
 
   return (
     <ContentPanel>
-      <BackLink href="/" label="Back to tasks" />
+      <BackLink href="/" label="Back to overview" />
       <ContentHeader
         eyebrow="Categories"
         title="Manage categories"

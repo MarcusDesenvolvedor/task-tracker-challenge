@@ -22,8 +22,9 @@ export default function NewTaskPage() {
             <ButtonLink href="/" variant="secondary">
               Cancel
             </ButtonLink>
-            <Button type="submit" form={FORM_ID}>
-              Save Task
+            <Button type="submit" form={FORM_ID} className="gap-2">
+              <PlusIcon />
+              Create Task
             </Button>
           </>
         }
@@ -33,7 +34,7 @@ export default function NewTaskPage() {
         categories={categories}
         action={createTaskAction}
         submitLabel="Create Task"
-        submitIcon={<PlusIcon />}
+        hideFooterActions
       />
     </ContentPanel>
   );

@@ -12,3 +12,7 @@ export function getSelectedTaskId(pathname: string): string | undefined {
 export function isCategoriesSection(pathname: string): boolean {
   return pathname.startsWith("/categories");
 }
+
+export function isOverviewRoute(pathname: string): boolean {
+  return pathname === "/";
+}

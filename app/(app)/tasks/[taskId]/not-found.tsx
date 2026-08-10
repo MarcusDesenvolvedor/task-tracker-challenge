@@ -11,7 +11,7 @@ export default function TaskNotFound() {
         href="/"
         className="mt-6 rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
       >
-        Back to tasks
+        Back to overview
       </Link>
     </div>
   );

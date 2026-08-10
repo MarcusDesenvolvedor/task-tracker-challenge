@@ -31,6 +31,8 @@ interface TaskFormProps {
   formId?: string;
   /** Rendered before the submit label, for example a plus glyph on creation. */
   submitIcon?: React.ReactNode;
+  /** Hide the bottom Cancel/Submit row when those actions live in the page header. */
+  hideFooterActions?: boolean;
 }
 
 const initialState: TaskActionState = {};
@@ -45,6 +47,7 @@ export function TaskForm({
   onSuccess,
   formId = "task-form",
   submitIcon,
+  hideFooterActions = false,
 }: TaskFormProps) {
   const [state, formAction, isPending] = useActionState(action, initialState);
   const [clientErrors, setClientErrors] = useState<TaskFormErrors>({});
@@ -130,29 +133,31 @@ export function TaskForm({
 
       {state.message ? <FormAlert>{state.message}</FormAlert> : null}
 
-      <div className="flex flex-col-reverse gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center">
-        {cancelHref ? (
-          <ButtonLink href={cancelHref} variant="secondary">
-            Cancel
-          </ButtonLink>
-        ) : onCancel ? (
-          <Button type="button" variant="secondary" onClick={onCancel}>
-            Cancel
+      {hideFooterActions ? null : (
+        <div className="flex flex-col-reverse gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center">
+          {cancelHref ? (
+            <ButtonLink href={cancelHref} variant="secondary">
+              Cancel
+            </ButtonLink>
+          ) : onCancel ? (
+            <Button type="button" variant="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+          ) : null}
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="gap-2 px-6 sm:ml-auto"
+          >
+            {isPending ? "Saving..." : (
+              <>
+                {submitIcon}
+                {submitLabel}
+              </>
+            )}
           </Button>
-        ) : null}
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="gap-2 px-6 sm:ml-auto"
-        >
-          {isPending ? "Saving..." : (
-            <>
-              {submitIcon}
-              {submitLabel}
-            </>
-          )}
-        </Button>
-      </div>
+        </div>
+      )}
     </form>
   );
 }
