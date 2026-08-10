@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { TaskDetailPanel } from "@/components/tasks/TaskDetailPanel";
-import { getCategoryById } from "@/lib/services/categories";
+import { TaskDetailContainer } from "@/components/tasks/TaskDetailContainer";
+import { getCategories, getCategoryById } from "@/lib/services/categories";
 import { getTaskById } from "@/lib/services/tasks";
 
 export default async function TaskPage({
@@ -14,6 +14,13 @@ export default async function TaskPage({
   }
 
   const category = getCategoryById(task.categoryId);
+  const categories = getCategories();
 
-  return <TaskDetailPanel task={task} category={category} />;
+  return (
+    <TaskDetailContainer
+      task={task}
+      category={category}
+      categories={categories}
+    />
+  );
 }

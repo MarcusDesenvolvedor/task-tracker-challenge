@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TASK_STATUS_LABELS } from "@/lib/constants/task";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 
@@ -7,12 +8,6 @@ interface TaskListItemProps {
   category?: Category;
   isSelected?: boolean;
 }
-
-const statusLabels = {
-  todo: "To do",
-  in_progress: "In progress",
-  done: "Done",
-} as const;
 
 export function TaskListItem({
   task,
@@ -38,7 +33,7 @@ export function TaskListItem({
                 : "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
             }`}
           >
-            {statusLabels[task.status]}
+            {TASK_STATUS_LABELS[task.status]}
           </span>
         </div>
         {category ? (
