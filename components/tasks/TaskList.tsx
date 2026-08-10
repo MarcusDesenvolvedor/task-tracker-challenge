@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { getSelectedTaskId } from "@/lib/navigation/pathnames";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 import { TaskListItem } from "./TaskListItem";
@@ -12,9 +13,7 @@ interface TaskListProps {
 
 export function TaskList({ tasks, categories }: TaskListProps) {
   const pathname = usePathname();
-  const selectedTaskId = pathname.startsWith("/tasks/")
-    ? pathname.split("/")[2]
-    : undefined;
+  const selectedTaskId = getSelectedTaskId(pathname);
 
   const categoryById = new Map(
     categories.map((category) => [category.id, category]),

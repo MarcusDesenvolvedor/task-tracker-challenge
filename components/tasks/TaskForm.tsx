@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { TASK_STATUS_LABELS, TASK_STATUS_OPTIONS } from "@/lib/constants/task";
 import type { TaskActionState } from "@/lib/actions/tasks";
 import type { Category } from "@/lib/types/category";
@@ -21,6 +22,7 @@ interface TaskFormProps {
     formData: FormData,
   ) => Promise<TaskActionState>;
   submitLabel: string;
+  cancelHref?: string;
   onCancel?: () => void;
   onSuccess?: () => void;
 }
@@ -32,6 +34,7 @@ export function TaskForm({
   categories,
   action,
   submitLabel,
+  cancelHref,
   onCancel,
   onSuccess,
 }: TaskFormProps) {
@@ -139,7 +142,11 @@ export function TaskForm({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : submitLabel}
         </Button>
-        {onCancel ? (
+        {cancelHref ? (
+          <ButtonLink href={cancelHref} variant="secondary">
+            Cancel
+          </ButtonLink>
+        ) : onCancel ? (
           <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>

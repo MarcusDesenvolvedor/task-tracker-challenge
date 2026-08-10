@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import type { CategoryActionState } from "@/lib/actions/categories";
 import type { Category } from "@/lib/types/category";
 import {
@@ -18,6 +19,7 @@ interface CategoryFormProps {
     formData: FormData,
   ) => Promise<CategoryActionState>;
   submitLabel: string;
+  cancelHref?: string;
   onCancel?: () => void;
   onSuccess?: () => void;
 }
@@ -29,6 +31,7 @@ export function CategoryForm({
   category,
   action,
   submitLabel,
+  cancelHref,
   onCancel,
   onSuccess,
 }: CategoryFormProps) {
@@ -110,7 +113,11 @@ export function CategoryForm({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : submitLabel}
         </Button>
-        {onCancel ? (
+        {cancelHref ? (
+          <ButtonLink href={cancelHref} variant="secondary">
+            Cancel
+          </ButtonLink>
+        ) : onCancel ? (
           <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>

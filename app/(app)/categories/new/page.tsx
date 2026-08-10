@@ -1,22 +1,23 @@
-import { createCategoryAction } from "@/lib/actions/categories";
+import { BackLink } from "@/components/layout/BackLink";
+import { ContentHeader } from "@/components/layout/ContentHeader";
+import { ContentPanel } from "@/components/layout/ContentPanel";
 import { CategoryForm } from "@/components/categories/CategoryForm";
+import { createCategoryAction } from "@/lib/actions/categories";
 
 export default function NewCategoryPage() {
   return (
-    <article className="mx-auto w-full max-w-3xl px-6 py-8">
-      <header className="mb-6 border-b border-zinc-200 pb-6 dark:border-zinc-800">
-        <p className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          Create category
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-zinc-900 dark:text-zinc-50">
-          New category
-        </h1>
-      </header>
-
+    <ContentPanel>
+      <BackLink href="/categories" label="Back to categories" />
+      <ContentHeader
+        eyebrow="Create category"
+        title="New category"
+        description="Choose a name and color for this category."
+      />
       <CategoryForm
         action={createCategoryAction}
         submitLabel="Create category"
+        cancelHref="/categories"
       />
-    </article>
+    </ContentPanel>
   );
 }

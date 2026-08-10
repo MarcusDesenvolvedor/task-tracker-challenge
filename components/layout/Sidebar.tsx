@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { TaskList } from "@/components/tasks/TaskList";
+import { isCategoriesSection } from "@/lib/navigation/pathnames";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 
@@ -9,21 +13,30 @@ interface SidebarProps {
 }
 
 export function Sidebar({ tasks, categories }: SidebarProps) {
+  const pathname = usePathname();
+  const isCategoriesActive = isCategoriesSection(pathname);
+
   return (
     <aside className="flex h-full w-80 shrink-0 flex-col border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
       <div className="border-b border-zinc-200 px-4 py-5 dark:border-zinc-800">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-              Task Tracker
-            </h1>
+            <Link href="/" className="block">
+              <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                Task Tracker
+              </h1>
+            </Link>
             <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
               {tasks.length} task{tasks.length === 1 ? "" : "s"}
             </p>
           </div>
           <Link
             href="/tasks/new"
-            className="rounded-lg bg-zinc-900 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+              pathname === "/tasks/new"
+                ? "bg-zinc-700 text-white dark:bg-zinc-300 dark:text-zinc-900"
+                : "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            }`}
           >
             New task
           </Link>
@@ -37,7 +50,11 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
       <div className="border-t border-zinc-200 p-3 dark:border-zinc-800">
         <Link
           href="/categories"
-          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+          className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            isCategoriesActive
+              ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
+              : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+          }`}
         >
           <GearIcon />
           Manage categories

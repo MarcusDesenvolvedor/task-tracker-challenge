@@ -76,7 +76,8 @@ export async function updateTaskAction(
 
   revalidatePath("/", "layout");
   revalidatePath(`/tasks/${taskId}`);
-  return {};
+  revalidatePath(`/tasks/${taskId}/edit`);
+  redirect(`/tasks/${taskId}`);
 }
 
 export async function deleteTaskAction(taskId: string): Promise<void> {

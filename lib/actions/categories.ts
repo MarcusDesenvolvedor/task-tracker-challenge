@@ -79,7 +79,8 @@ export async function updateCategoryAction(
   revalidatePath("/", "layout");
   revalidatePath("/categories");
   revalidatePath(`/categories/${categoryId}`);
-  return {};
+  revalidatePath(`/categories/${categoryId}/edit`);
+  redirect(`/categories/${categoryId}`);
 }
 
 export async function deleteCategoryAction(

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { CategoryDetailContainer } from "@/components/categories/CategoryDetailContainer";
+import { CategoryDetailView } from "@/components/categories/CategoryDetailView";
+import { getCategoryDeletionBlockReason } from "@/lib/rules/deletion";
 import {
   getCategoryById,
   getCategoryTaskCount,
@@ -16,8 +17,13 @@ export default async function CategoryPage({
   }
 
   const taskCount = getCategoryTaskCount(categoryId);
+  const deleteBlockReason = getCategoryDeletionBlockReason(taskCount);
 
   return (
-    <CategoryDetailContainer category={category} taskCount={taskCount} />
+    <CategoryDetailView
+      category={category}
+      taskCount={taskCount}
+      deleteBlockReason={deleteBlockReason}
+    />
   );
 }
