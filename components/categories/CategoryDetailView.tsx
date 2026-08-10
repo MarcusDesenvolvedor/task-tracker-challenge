@@ -7,12 +7,14 @@ import { Button } from "@/components/ui/Button";
 interface CategoryDetailViewProps {
   category: Category;
   taskCount: number;
+  deleteBlockReason?: string | null;
   onEdit: () => void;
 }
 
 export function CategoryDetailView({
   category,
   taskCount,
+  deleteBlockReason,
   onEdit,
 }: CategoryDetailViewProps) {
   return (
@@ -38,7 +40,10 @@ export function CategoryDetailView({
             <Button type="button" variant="secondary" onClick={onEdit}>
               Edit
             </Button>
-            <DeleteCategoryButton categoryId={category.id} />
+            <DeleteCategoryButton
+              categoryId={category.id}
+              blockReason={deleteBlockReason}
+            />
           </div>
         </div>
 

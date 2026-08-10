@@ -1,4 +1,7 @@
 import { getStore } from "@/lib/data/store";
+import {
+  assertCategoryCanBeDeleted,
+} from "@/lib/rules/deletion";
 import type { Category } from "@/lib/types/category";
 import {
   hasValidationErrors,
@@ -20,12 +23,7 @@ export class CategoryNotFoundError extends Error {
   }
 }
 
-export class CategoryInUseError extends Error {
-  constructor(public taskCount: number) {
-    super(`Category is used by ${taskCount} task(s).`);
-    this.name = "CategoryInUseError";
-  }
-}
+export { CategoryInUseError } from "@/lib/rules/deletion";
 
 function createCategoryId(): string {
   return `cat-${crypto.randomUUID()}`;
@@ -94,9 +92,7 @@ export function deleteCategory(id: string): void {
   }
 
   const taskCount = tasks.filter((task) => task.categoryId === id).length;
-  if (taskCount > 0) {
-    throw new CategoryInUseError(taskCount);
-  }
+  assertCategoryCanBeDeleted(taskCount);
 
   categories.splice(index, 1);
 }

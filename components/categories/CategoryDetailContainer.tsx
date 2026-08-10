@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateCategoryAction } from "@/lib/actions/categories";
+import { getCategoryDeletionBlockReason } from "@/lib/rules/deletion";
 import type { Category } from "@/lib/types/category";
 import { CategoryDetailView } from "./CategoryDetailView";
 import { CategoryForm } from "./CategoryForm";
@@ -17,6 +18,7 @@ export function CategoryDetailContainer({
 }: CategoryDetailContainerProps) {
   const [isEditing, setIsEditing] = useState(false);
   const boundUpdateAction = updateCategoryAction.bind(null, category.id);
+  const deleteBlockReason = getCategoryDeletionBlockReason(taskCount);
 
   if (isEditing) {
     return (
@@ -45,6 +47,7 @@ export function CategoryDetailContainer({
     <CategoryDetailView
       category={category}
       taskCount={taskCount}
+      deleteBlockReason={deleteBlockReason}
       onEdit={() => setIsEditing(true)}
     />
   );

@@ -93,11 +93,7 @@ export async function deleteCategoryAction(
     }
 
     if (error instanceof CategoryInUseError) {
-      return {
-        message: `Cannot delete this category because ${error.taskCount} task${
-          error.taskCount === 1 ? "" : "s"
-        } still use it.`,
-      };
+      return { message: error.message };
     }
 
     throw error;
