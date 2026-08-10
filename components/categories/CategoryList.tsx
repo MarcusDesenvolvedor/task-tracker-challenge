@@ -25,7 +25,7 @@ export function CategoryList({
   }
 
   return (
-    <ul className="divide-y divide-zinc-800 overflow-hidden rounded-xl border border-zinc-800 bg-surface-elevated">
+    <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface-elevated">
       {categories.map((category) => {
         const taskCount = taskCountByCategoryId[category.id] ?? 0;
 
@@ -33,20 +33,20 @@ export function CategoryList({
           <li key={category.id}>
             <Link
               href={`/categories/${category.id}`}
-              className="flex min-h-16 items-center justify-between gap-4 px-4 py-3 transition-colors duration-200 hover:bg-zinc-900/60 sm:px-5"
+              className="flex min-h-16 items-center justify-between gap-4 px-4 py-3 transition-colors duration-200 hover:bg-accent-soft/60 sm:px-5"
             >
               <div className="flex min-w-0 items-center gap-3">
                 <CategoryColorDot color={category.color} size="lg" />
                 <div className="min-w-0">
-                  <span className="block truncate font-medium text-white">
+                  <span className="block truncate font-medium text-foreground">
                     {category.name}
                   </span>
-                  <span className="block text-xs text-zinc-500">
+                  <span className="block text-xs text-muted">
                     {getCategoryColorLabel(category.color)}
                   </span>
                 </div>
               </div>
-              <span className="shrink-0 text-sm text-zinc-500">
+              <span className="shrink-0 text-sm text-muted">
                 {taskCount} task{taskCount === 1 ? "" : "s"}
               </span>
             </Link>

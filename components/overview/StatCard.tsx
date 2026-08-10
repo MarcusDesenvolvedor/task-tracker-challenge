@@ -14,7 +14,7 @@ export function StatCard({
 }: StatCardProps) {
   return (
     <div
-      className="view-enter rounded-xl border border-zinc-800 bg-surface-elevated p-4 sm:p-5"
+      className="view-enter rounded-xl border border-border bg-surface-elevated p-4 sm:p-5"
       style={{ animationDelay: `${delayMs}ms` }}
     >
       <div className="flex items-center gap-2">
@@ -25,12 +25,12 @@ export function StatCard({
             style={{ backgroundColor: accentColor }}
           />
         ) : null}
-        <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+        <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-muted">
           {label}
         </p>
       </div>
       <p
-        className="mt-2 text-3xl font-semibold tabular-nums leading-none text-white sm:text-4xl"
+        className="mt-2 text-3xl font-semibold tabular-nums leading-none text-foreground sm:text-4xl"
         style={accentColor ? { color: accentColor } : undefined}
       >
         {value}

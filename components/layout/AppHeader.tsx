@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { TaskSearchModal } from "@/components/search/TaskSearchModal";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
@@ -32,23 +33,24 @@ export function AppHeader({ tasks, categories }: AppHeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-20 shrink-0 border-b border-zinc-800 bg-black/90 backdrop-blur-sm">
+      <header className="sticky top-0 z-20 shrink-0 border-b border-border bg-header backdrop-blur-sm">
         <div className="relative flex h-14 items-center px-4 sm:px-6 lg:px-10">
           <div className="mx-auto w-full max-w-md">
             <button
               type="button"
               onClick={openSearch}
-              className="flex h-10 w-full items-center gap-2.5 rounded-lg border border-zinc-800 bg-surface-elevated px-3 text-left text-sm text-zinc-500 transition-colors hover:border-zinc-700 hover:text-zinc-300"
+              className="flex h-10 w-full items-center gap-2.5 rounded-lg border border-border bg-surface-elevated px-3 text-left text-sm text-muted transition-colors hover:border-border-strong hover:text-muted-foreground"
             >
               <SearchIcon />
               <span className="flex-1 truncate">Search tasks…</span>
-              <kbd className="hidden shrink-0 rounded-md border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 sm:inline">
+              <kbd className="hidden shrink-0 rounded-md border border-border bg-accent-soft px-1.5 py-0.5 text-[10px] font-medium text-muted sm:inline">
                 ⌘K
               </kbd>
             </button>
           </div>
 
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 sm:right-6 lg:right-10">
+          <div className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2 sm:right-6 lg:right-10">
+            <ThemeToggle />
             <NotificationBell tasks={tasks} />
           </div>
         </div>

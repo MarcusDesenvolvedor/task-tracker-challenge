@@ -56,10 +56,10 @@ export function DueDatePicker({
             : "Select due date"
         }
         className={`${formInputClassName(hasError)} flex items-center gap-2.5 text-left ${
-          value ? "text-white" : "text-zinc-600"
+          value ? "text-foreground" : "text-muted"
         }`}
       >
-        <CalendarIcon className={value ? "text-zinc-300" : "text-zinc-500"} />
+        <CalendarIcon className={value ? "text-muted-foreground" : "text-muted"} />
         <span className="flex-1 truncate">
           {value ? formatAmericanDateKey(value) : "Select due date"}
         </span>

@@ -133,8 +133,8 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
         }
         className={`relative inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${
           isOpen
-            ? "border-zinc-700 bg-zinc-900 text-white"
-            : "border-zinc-800 bg-surface-elevated text-zinc-400 hover:border-zinc-700 hover:text-white"
+            ? "border-border-strong bg-accent-soft text-foreground"
+            : "border-border bg-surface-elevated text-muted-foreground hover:border-border-strong hover:text-foreground"
         }`}
       >
         <BellIcon />
@@ -148,12 +148,12 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
           id={panelId}
           role="dialog"
           aria-label="Notifications"
-          className="popover-enter absolute right-0 top-full z-30 mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-zinc-800 bg-surface-elevated shadow-2xl shadow-black/50"
+          className="popover-enter absolute right-0 top-full z-30 mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-border bg-surface-elevated shadow-2xl shadow-[var(--shadow)]"
         >
-          <div className="flex items-start justify-between gap-3 border-b border-zinc-800 px-4 py-3">
+          <div className="flex items-start justify-between gap-3 border-b border-border px-4 py-3">
             <div>
-              <p className="text-sm font-medium text-white">Notifications</p>
-              <p className="mt-0.5 text-xs text-zinc-500">
+              <p className="text-sm font-medium text-foreground">Notifications</p>
+              <p className="mt-0.5 text-xs text-muted">
                 Due soon and overdue task alerts
               </p>
             </div>
@@ -161,7 +161,7 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
               <button
                 type="button"
                 onClick={handleClear}
-                className="rounded-md px-2 py-1 text-xs text-zinc-500 transition-colors hover:bg-zinc-900 hover:text-zinc-300"
+                className="rounded-md px-2 py-1 text-xs text-muted transition-colors hover:bg-accent-soft hover:text-muted-foreground"
               >
                 Clear
               </button>
@@ -169,8 +169,8 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
           </div>
 
           {permission !== "granted" ? (
-            <div className="border-b border-zinc-800 px-4 py-3">
-              <p className="text-xs leading-5 text-zinc-400">
+            <div className="border-b border-border px-4 py-3">
+              <p className="text-xs leading-5 text-muted-foreground">
                 {permission === "denied"
                   ? "Browser notifications are blocked. You can still see alerts here."
                   : "Allow notifications to get alerts when tasks are due."}
@@ -191,17 +191,17 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
 
           <div className="max-h-80 overflow-y-auto">
             {notifications.length === 0 ? (
-              <p className="px-4 py-8 text-center text-sm text-zinc-500">
+              <p className="px-4 py-8 text-center text-sm text-muted">
                 No notifications yet.
               </p>
             ) : (
-              <ul className="divide-y divide-zinc-800">
+              <ul className="divide-y divide-border">
                 {notifications.map((notification) => (
                   <li key={notification.id}>
                     <Link
                       href={`/tasks/${notification.taskId}`}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 transition-colors hover:bg-zinc-900/70"
+                      className="block px-4 py-3 transition-colors hover:bg-accent-soft/70"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <span
@@ -213,14 +213,14 @@ export function NotificationBell({ tasks }: NotificationBellProps) {
                         >
                           {KIND_LABELS[notification.kind]}
                         </span>
-                        <time className="text-[10px] text-zinc-600">
+                        <time className="text-[10px] text-muted">
                           {formatDateTime(notification.createdAt)}
                         </time>
                       </div>
-                      <p className="mt-1 truncate text-sm font-medium text-white">
+                      <p className="mt-1 truncate text-sm font-medium text-foreground">
                         {notification.taskTitle}
                       </p>
-                      <p className="mt-0.5 text-xs text-zinc-500">
+                      <p className="mt-0.5 text-xs text-muted">
                         Due {formatDateTime(notification.dueAt)}
                       </p>
                     </Link>

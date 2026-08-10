@@ -34,7 +34,7 @@ export function CategoryColorSelect({
             defaultChecked={color === defaultValue}
             className="peer sr-only"
           />
-          <span className="flex min-h-10 items-center gap-2 rounded-lg border border-zinc-800 bg-surface-input px-3 py-2 text-sm text-zinc-400 transition-colors hover:border-zinc-700 hover:text-zinc-200 peer-checked:border-zinc-500 peer-checked:bg-zinc-800 peer-checked:text-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-zinc-500">
+          <span className="flex min-h-10 items-center gap-2 rounded-lg border border-border bg-surface-input px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground peer-checked:border-border-strong peer-checked:bg-chip peer-checked:text-foreground peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--ring)]">
             <span
               aria-hidden
               className="h-2.5 w-2.5 shrink-0 rounded-full"

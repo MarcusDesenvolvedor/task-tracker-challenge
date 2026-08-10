@@ -43,8 +43,8 @@ function TaskGroup({
           aria-controls={listId}
           className={`flex min-h-10 w-full items-center gap-2 rounded-lg border px-3 py-2 text-[11px] font-semibold uppercase tracking-wider transition-colors ${
             isExpanded
-              ? "border-zinc-700 bg-zinc-900 text-white"
-              : "border-transparent text-zinc-500 hover:bg-zinc-900/60 hover:text-zinc-300"
+              ? "border-border-strong bg-accent-soft text-foreground"
+              : "border-transparent text-muted hover:bg-accent-soft/60 hover:text-muted-foreground"
           }`}
         >
           <ChevronDownIcon
@@ -55,7 +55,7 @@ function TaskGroup({
           <span className="flex-1 text-left">{title}</span>
           <span
             className={`rounded-md px-1.5 py-0.5 text-[10px] tabular-nums transition-colors ${
-              isExpanded ? "bg-zinc-800 text-zinc-200" : "bg-zinc-900 text-zinc-500"
+              isExpanded ? "bg-chip text-foreground" : "bg-accent-soft text-muted"
             }`}
           >
             {tasks.length}
@@ -74,7 +74,7 @@ function TaskGroup({
       >
         <div className="min-h-0 overflow-hidden py-2">
           {tasks.length === 0 ? (
-            <p className="px-5 py-2 text-xs text-zinc-600">No tasks</p>
+            <p className="px-5 py-2 text-xs text-muted">No tasks</p>
           ) : (
             <TaskList
               tasks={tasks}

@@ -43,28 +43,28 @@ export function CategoryDetailView({
         }
       />
 
-      <dl className="grid gap-4 rounded-xl border border-zinc-800 bg-surface-elevated p-4 sm:grid-cols-2 sm:p-5">
+      <dl className="grid gap-4 rounded-xl border border-border bg-surface-elevated p-4 sm:grid-cols-2 sm:p-5">
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Color
           </dt>
-          <dd className="mt-2 flex items-center gap-2 text-sm font-medium text-white">
+          <dd className="mt-2 flex items-center gap-2 text-sm font-medium text-foreground">
             <CategoryColorDot color={category.color} size="lg" />
             {getCategoryColorLabel(category.color)}
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Tasks
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">
+          <dd className="mt-2 text-sm font-medium text-foreground">
             {tasks.length}
           </dd>
         </div>
       </dl>
 
       <section className="mt-4">
-        <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+        <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted">
           Linked tasks
         </h2>
         <CategoryTasksList tasks={tasks} categoryName={category.name} />

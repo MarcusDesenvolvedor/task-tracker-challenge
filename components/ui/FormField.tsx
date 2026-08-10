@@ -1,8 +1,8 @@
 export function formInputClassName(hasError: boolean) {
-  return `w-full rounded-lg border bg-surface-input px-3 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-zinc-600 focus:ring-2 ${
+  return `w-full rounded-lg border bg-surface-input px-3 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:ring-2 ${
     hasError
       ? "border-red-500 focus:border-red-500 focus:ring-red-900/40"
-      : "border-zinc-800 focus:border-zinc-600 focus:ring-zinc-800/80"
+      : "border-border focus:border-border-strong focus:ring-border/80"
   }`;
 }
 
@@ -33,12 +33,12 @@ export function FormField({
   return (
     <div
       className={
-        card ? "rounded-xl border border-zinc-800/80 bg-surface-elevated p-4 sm:p-5" : ""
+        card ? "rounded-xl border border-border/80 bg-surface-elevated p-4 sm:p-5" : ""
       }
     >
       <label
         htmlFor={htmlFor}
-        className="mb-3 block text-[11px] font-semibold uppercase tracking-wider text-zinc-500"
+        className="mb-3 block text-[11px] font-semibold uppercase tracking-wider text-muted"
       >
         {label}
         {required ? (
@@ -49,7 +49,7 @@ export function FormField({
         ) : null}
       </label>
       {hint ? (
-        <p id={hintId} className="mb-3 text-xs leading-5 text-zinc-500">
+        <p id={hintId} className="mb-3 text-xs leading-5 text-muted">
           {hint}
         </p>
       ) : null}

@@ -20,11 +20,11 @@ export function CategoryProgress({ items }: CategoryProgressProps) {
 
   if (items.length === 0) {
     return (
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-muted">
         No categories yet.{" "}
         <Link
           href="/categories/new"
-          className="rounded font-medium text-zinc-300 underline underline-offset-4 transition-colors hover:text-white"
+          className="rounded font-medium text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
         >
           Create one
         </Link>{" "}
@@ -40,14 +40,14 @@ export function CategoryProgress({ items }: CategoryProgressProps) {
           <div className="mb-2 flex items-center justify-between gap-3">
             <Link
               href={`/categories/${category.id}`}
-              className="flex min-w-0 items-center gap-2.5 rounded transition-colors hover:text-white"
+              className="flex min-w-0 items-center gap-2.5 rounded transition-colors hover:text-foreground"
             >
               <CategoryColorDot color={category.color} />
-              <span className="truncate text-sm font-medium text-white">
+              <span className="truncate text-sm font-medium text-foreground">
                 {category.name}
               </span>
             </Link>
-            <span className="shrink-0 text-xs tabular-nums text-zinc-500">
+            <span className="shrink-0 text-xs tabular-nums text-muted">
               {done}/{total} done · {percent}%
             </span>
           </div>
@@ -57,7 +57,7 @@ export function CategoryProgress({ items }: CategoryProgressProps) {
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label={`${category.name}: ${done} of ${total} tasks completed`}
-            className="h-2 w-full overflow-hidden rounded-full bg-zinc-800"
+            className="h-2 w-full overflow-hidden rounded-full bg-chip"
           >
             <div
               className="h-full rounded-full"

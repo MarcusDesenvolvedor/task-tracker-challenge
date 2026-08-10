@@ -18,7 +18,7 @@ export function CompletionTrendChart({ points }: CompletionTrendChartProps) {
 
   if (points.length === 0) {
     return (
-      <p className="text-sm text-zinc-500">No completion data for this range.</p>
+      <p className="text-sm text-muted">No completion data for this range.</p>
     );
   }
 
@@ -37,7 +37,7 @@ export function CompletionTrendChart({ points }: CompletionTrendChartProps) {
               key={point.key}
               className="flex min-w-0 flex-1 flex-col items-center justify-end gap-2"
             >
-              <span className="text-[10px] tabular-nums text-zinc-500">
+              <span className="text-[10px] tabular-nums text-muted">
                 {point.count > 0 ? point.count : ""}
               </span>
               <div className="flex h-28 w-full items-end justify-center">
@@ -59,7 +59,7 @@ export function CompletionTrendChart({ points }: CompletionTrendChartProps) {
         {points.map((point) => (
           <span
             key={point.key}
-            className="min-w-0 flex-1 truncate text-center text-[10px] text-zinc-500"
+            className="min-w-0 flex-1 truncate text-center text-[10px] text-muted"
           >
             {point.label}
           </span>

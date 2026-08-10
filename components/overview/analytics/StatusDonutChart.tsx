@@ -26,7 +26,7 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
 
   if (total === 0) {
     return (
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-muted">
         No status data matches these filters.
       </p>
     );
@@ -43,7 +43,7 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
             cy="50"
             r={RADIUS}
             fill="none"
-            stroke="#27272a"
+            stroke="var(--border)"
             strokeWidth="12"
           />
           {items.map((item) => {
@@ -77,10 +77,10 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
           })}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-semibold tabular-nums text-white">
+          <span className="text-2xl font-semibold tabular-nums text-foreground">
             {total}
           </span>
-          <span className="text-[10px] uppercase tracking-wider text-zinc-500">
+          <span className="text-[10px] uppercase tracking-wider text-muted">
             tasks
           </span>
         </div>
@@ -94,7 +94,7 @@ export function StatusDonutChart({ items }: StatusDonutChartProps) {
           return (
             <li
               key={item.id}
-              className="flex items-center justify-between gap-3 text-xs text-zinc-400"
+              className="flex items-center justify-between gap-3 text-xs text-muted-foreground"
             >
               <span className="flex items-center gap-2">
                 <span

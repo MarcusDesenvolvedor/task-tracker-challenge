@@ -87,8 +87,8 @@ export function CategorySelect({
   const borderClasses = hasError
     ? "border-red-500 focus-visible:border-red-500"
     : isOpen
-      ? "border-zinc-600"
-      : "border-zinc-800 hover:border-zinc-700";
+      ? "border-border-strong"
+      : "border-border hover:border-border-strong";
 
   return (
     <div ref={containerRef} className="relative">
@@ -108,19 +108,19 @@ export function CategorySelect({
           <span className="flex min-w-0 items-center gap-3">
             <CategoryColorDot color={selectedCategory.color} />
             <span className="min-w-0">
-              <span className="block truncate text-sm text-white">
+              <span className="block truncate text-sm text-foreground">
                 {selectedCategory.name}
               </span>
-              <span className="block text-xs text-zinc-500">
+              <span className="block text-xs text-muted">
                 {getCategoryColorLabel(selectedCategory.color)}
               </span>
             </span>
           </span>
         ) : (
-          <span className="text-sm text-zinc-600">Select a category</span>
+          <span className="text-sm text-muted">Select a category</span>
         )}
         <ChevronDownIcon
-          className={`text-zinc-500 transition-transform duration-200 ease-out ${
+          className={`text-muted transition-transform duration-200 ease-out ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -131,7 +131,7 @@ export function CategorySelect({
           id={listboxId}
           role="listbox"
           aria-label="Category"
-          className="popover-enter absolute left-0 right-0 top-full z-20 mt-2 max-h-64 overflow-y-auto rounded-lg border border-zinc-800 bg-surface-elevated p-1 shadow-xl shadow-black/50"
+          className="popover-enter absolute left-0 right-0 top-full z-20 mt-2 max-h-64 overflow-y-auto rounded-lg border border-border bg-surface-elevated p-1 shadow-xl shadow-[var(--shadow)]"
         >
           {categories.map((category) => {
             const isSelected = category.id === selectedId;
@@ -145,15 +145,15 @@ export function CategorySelect({
                     setIsOpen(false);
                   }}
                   className={`flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors ${
-                    isSelected ? "bg-zinc-800" : "hover:bg-zinc-800/60"
+                    isSelected ? "bg-chip" : "hover:bg-chip/60"
                   }`}
                 >
                   <CategoryColorDot color={category.color} />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm text-white">
+                    <span className="block truncate text-sm text-foreground">
                       {category.name}
                     </span>
-                    <span className="block text-xs text-zinc-500">
+                    <span className="block text-xs text-muted">
                       {getCategoryColorLabel(category.color)}
                     </span>
                   </span>
@@ -174,7 +174,7 @@ function CheckIcon() {
       aria-hidden
       viewBox="0 0 20 20"
       fill="currentColor"
-      className="h-4 w-4 shrink-0 text-white"
+      className="h-4 w-4 shrink-0 text-foreground"
     >
       <path
         fillRule="evenodd"

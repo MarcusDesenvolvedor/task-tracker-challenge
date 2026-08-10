@@ -20,7 +20,7 @@ export function CategoryBarsChart({ items }: CategoryBarsChartProps) {
 
   if (items.length === 0) {
     return (
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-muted">
         No category activity matches these filters.
       </p>
     );
@@ -35,10 +35,10 @@ export function CategoryBarsChart({ items }: CategoryBarsChartProps) {
         return (
           <li key={item.id}>
             <div className="mb-1.5 flex items-center justify-between gap-3 text-xs">
-              <span className="truncate font-medium text-white">{item.label}</span>
-              <span className="tabular-nums text-zinc-500">{item.count}</span>
+              <span className="truncate font-medium text-foreground">{item.label}</span>
+              <span className="tabular-nums text-muted">{item.count}</span>
             </div>
-            <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+            <div className="h-2 overflow-hidden rounded-full bg-chip">
               <div
                 className="h-full rounded-full"
                 style={{

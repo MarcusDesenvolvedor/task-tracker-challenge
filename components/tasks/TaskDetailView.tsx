@@ -30,9 +30,9 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
         }
       />
 
-      <dl className="grid gap-4 rounded-xl border border-zinc-800 bg-surface-elevated p-4 sm:grid-cols-2 sm:p-5">
+      <dl className="grid gap-4 rounded-xl border border-border bg-surface-elevated p-4 sm:grid-cols-2 sm:p-5">
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Status
           </dt>
           <dd className="mt-2">
@@ -40,15 +40,15 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Category
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">
+          <dd className="mt-2 text-sm font-medium text-foreground">
             {category ? (
               <span className="inline-flex items-center gap-2">
                 <CategoryColorDot color={category.color} />
                 {category.name}
-                <span className="text-xs font-normal text-zinc-500">
+                <span className="text-xs font-normal text-muted">
                   {getCategoryColorLabel(category.color)}
                 </span>
               </span>
@@ -58,40 +58,40 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Due
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">
+          <dd className="mt-2 text-sm font-medium text-foreground">
             {task.dueAt ? (
               <time dateTime={task.dueAt}>{formatDateTime(task.dueAt)}</time>
             ) : (
-              <span className="text-zinc-500">No due date</span>
+              <span className="text-muted">No due date</span>
             )}
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Created
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">
+          <dd className="mt-2 text-sm font-medium text-foreground">
             <time dateTime={task.createdAt}>{formatDateTime(task.createdAt)}</time>
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             Last updated
           </dt>
-          <dd className="mt-2 text-sm font-medium text-white">
+          <dd className="mt-2 text-sm font-medium text-foreground">
             <time dateTime={task.updatedAt}>{formatDateTime(task.updatedAt)}</time>
           </dd>
         </div>
       </dl>
 
-      <section className="mt-4 rounded-xl border border-zinc-800 bg-surface-elevated p-4 sm:p-5">
-        <h2 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+      <section className="mt-4 rounded-xl border border-border bg-surface-elevated p-4 sm:p-5">
+        <h2 className="text-[11px] font-semibold uppercase tracking-wider text-muted">
           Description
         </h2>
-        <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-zinc-300 sm:text-base">
+        <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-muted-foreground sm:text-base">
           {task.description || "No description provided."}
         </p>
       </section>

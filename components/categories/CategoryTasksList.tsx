@@ -15,7 +15,7 @@ export function CategoryTasksList({
 }: CategoryTasksListProps) {
   if (tasks.length === 0) {
     return (
-      <div className="rounded-xl border border-zinc-800 bg-surface-elevated">
+      <div className="rounded-xl border border-border bg-surface-elevated">
         <EmptyState
           compact
           title="No tasks in this category"
@@ -27,19 +27,19 @@ export function CategoryTasksList({
   }
 
   return (
-    <ul className="divide-y divide-zinc-800 overflow-hidden rounded-xl border border-zinc-800 bg-surface-elevated">
+    <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface-elevated">
       {tasks.map((task) => (
         <li key={task.id}>
           <Link
             href={`/tasks/${task.id}`}
-            className="flex min-h-16 items-center justify-between gap-4 px-4 py-3 transition-colors duration-200 hover:bg-zinc-900/60 sm:px-5"
+            className="flex min-h-16 items-center justify-between gap-4 px-4 py-3 transition-colors duration-200 hover:bg-accent-soft/60 sm:px-5"
           >
             <div className="min-w-0">
-              <span className="block truncate font-medium text-white">
+              <span className="block truncate font-medium text-foreground">
                 {task.title}
               </span>
               {task.description ? (
-                <span className="mt-0.5 block truncate text-xs text-zinc-500">
+                <span className="mt-0.5 block truncate text-xs text-muted">
                   {task.description}
                 </span>
               ) : null}

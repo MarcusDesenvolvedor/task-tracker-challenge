@@ -9,9 +9,9 @@ type ButtonLinkProps = ComponentProps<typeof Link> & {
 
 const variantClasses: Record<ButtonLinkVariant, string> = {
   primary:
-    "bg-white text-black hover:bg-zinc-200",
+    "bg-foreground text-background hover:opacity-90",
   secondary:
-    "border border-zinc-700 bg-transparent text-white hover:bg-zinc-900",
+    "border border-border-strong bg-transparent text-foreground hover:bg-accent-soft",
   danger:
     "border border-red-900/60 bg-transparent text-red-400 hover:bg-red-950/40",
 };

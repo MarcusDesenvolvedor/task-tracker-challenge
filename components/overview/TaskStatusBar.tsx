@@ -40,7 +40,7 @@ export function TaskStatusBar({ summary }: TaskStatusBarProps) {
       <div
         role="img"
         aria-label={describeDistribution(summary)}
-        className="flex h-2.5 w-full overflow-hidden rounded-full bg-zinc-800"
+        className="flex h-2.5 w-full overflow-hidden rounded-full bg-chip"
       >
         {TASK_STATUS_OPTIONS.map((status) => (
           <div
@@ -56,7 +56,7 @@ export function TaskStatusBar({ summary }: TaskStatusBarProps) {
       </div>
 
       {summary.total === 0 ? (
-        <p className="mt-3 text-xs text-zinc-500">
+        <p className="mt-3 text-xs text-muted">
           No tasks yet. Create a task to see its distribution here.
         </p>
       ) : (
@@ -64,7 +64,7 @@ export function TaskStatusBar({ summary }: TaskStatusBarProps) {
           {TASK_STATUS_OPTIONS.map((status) => (
             <li
               key={status}
-              className="flex items-center gap-2 text-xs text-zinc-400"
+              className="flex items-center gap-2 text-xs text-muted-foreground"
             >
               <span
                 aria-hidden

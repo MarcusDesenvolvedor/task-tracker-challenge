@@ -12,17 +12,17 @@ export function ContentHeader({
   actions,
 }: ContentHeaderProps) {
   return (
-    <header className="mb-8 border-b border-zinc-800 pb-8">
+    <header className="mb-8 border-b border-border pb-8">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             {eyebrow}
           </p>
-          <h1 className="mt-2 break-words text-3xl font-semibold leading-tight text-white sm:text-4xl">
+          <h1 className="mt-2 break-words text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
             {title}
           </h1>
           {description ? (
-            <p className="mt-2 text-sm leading-6 text-zinc-400">
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
               {description}
             </p>
           ) : null}

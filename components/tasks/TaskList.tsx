@@ -35,7 +35,7 @@ export function TaskList({
         action={
           <Link
             href="/tasks/new"
-            className="text-sm font-medium text-white underline-offset-4 hover:underline"
+            className="text-sm font-medium text-foreground underline-offset-4 hover:underline"
           >
             Create task
           </Link>

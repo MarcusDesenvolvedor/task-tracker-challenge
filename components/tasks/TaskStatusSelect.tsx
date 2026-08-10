@@ -23,12 +23,12 @@ export function TaskStatusSelect({
         className={`${formInputClassName(false)} appearance-none pr-10`}
       >
         {TASK_STATUS_OPTIONS.map((status) => (
-          <option key={status} value={status} className="bg-surface-input text-white">
+          <option key={status} value={status} className="bg-surface-input text-foreground">
             {TASK_STATUS_LABELS[status]}
           </option>
         ))}
       </select>
-      <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+      <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
     </div>
   );
 }

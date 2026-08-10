@@ -161,7 +161,7 @@ export function TaskForm({
       {state.message ? <FormAlert>{state.message}</FormAlert> : null}
 
       {hideFooterActions ? null : (
-        <div className="flex flex-col-reverse gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center">
+        <div className="flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center">
           {cancelHref ? (
             <ButtonLink href={cancelHref} variant="secondary">
               Cancel

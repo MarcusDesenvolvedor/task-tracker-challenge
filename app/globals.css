@@ -1,18 +1,44 @@
 @import "tailwindcss";
 
 :root {
+  --background: #fafafa;
+  --foreground: #18181b;
+  --surface: #f4f4f5;
+  --surface-elevated: #ffffff;
+  --surface-input: #ffffff;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --border-subtle: #f4f4f5;
+  --muted: #71717a;
+  --muted-foreground: #52525b;
+  --accent-soft: #f4f4f5;
+  --chip: #e4e4e7;
+  --overlay: rgb(24 24 27 / 0.45);
+  --header-bg: rgb(250 250 250 / 0.9);
+  --ring: #a1a1aa;
+  --shadow: rgb(24 24 27 / 0.12);
+
+  --motion-duration: 200ms;
+  --motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark {
   --background: #000000;
   --foreground: #ffffff;
   --surface: #0a0a0a;
   --surface-elevated: #141414;
   --surface-input: #1a1a1a;
-  --border: #262626;
+  --border: #27272a;
+  --border-strong: #3f3f46;
   --border-subtle: #1f1f1f;
-  --muted: #888888;
-  --muted-foreground: #a3a3a3;
-
-  --motion-duration: 200ms;
-  --motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --muted: #71717a;
+  --muted-foreground: #a1a1aa;
+  --accent-soft: #18181b;
+  --chip: #27272a;
+  --overlay: rgb(0 0 0 / 0.7);
+  --header-bg: rgb(0 0 0 / 0.9);
+  --ring: #525252;
+  --shadow: rgb(0 0 0 / 0.5);
 }
 
 @theme inline {
@@ -22,9 +48,15 @@
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-input: var(--surface-input);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-border-subtle: var(--border-subtle);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-chip: var(--chip);
+  --color-overlay: var(--overlay);
+  --color-header: var(--header-bg);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -36,7 +68,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #525252;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 

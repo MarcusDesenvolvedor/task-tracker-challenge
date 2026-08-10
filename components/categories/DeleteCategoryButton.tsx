@@ -87,7 +87,7 @@ export function DeleteCategoryButton({
       {tooltipMessage && tooltipPosition ? (
         <span
           role="tooltip"
-          className="pointer-events-none fixed z-50 w-max max-w-xs -translate-x-1/2 rounded-lg bg-zinc-900 px-3 py-2 text-center text-xs leading-5 text-white shadow-lg dark:bg-zinc-100 dark:text-zinc-900"
+          className="pointer-events-none fixed z-50 w-max max-w-xs -translate-x-1/2 rounded-lg border border-border bg-surface-elevated px-3 py-2 text-center text-xs leading-5 text-foreground shadow-lg shadow-[var(--shadow)]"
           style={{
             left: tooltipPosition.x,
             top: tooltipPosition.y + 16,

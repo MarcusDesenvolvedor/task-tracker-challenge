@@ -52,7 +52,7 @@ export function QuickTaskStatus({ taskId, status }: QuickTaskStatusProps) {
       <div
         role="group"
         aria-label="Task status"
-        className="inline-flex max-w-full flex-wrap gap-1 rounded-lg border border-zinc-800 bg-zinc-950/60 p-1"
+        className="inline-flex max-w-full flex-wrap gap-1 rounded-lg border border-border bg-accent-soft/60 p-1"
       >
         {TASK_STATUS_OPTIONS.map((option) => {
           const isActive = option === currentStatus;
@@ -66,8 +66,8 @@ export function QuickTaskStatus({ taskId, status }: QuickTaskStatusProps) {
               onClick={() => handleChange(option)}
               className={`rounded-md px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
                 isActive
-                  ? "text-white"
-                  : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300"
+                  ? "text-foreground"
+                  : "text-muted hover:bg-accent-soft hover:text-muted-foreground"
               }`}
               style={
                 isActive
@@ -81,7 +81,7 @@ export function QuickTaskStatus({ taskId, status }: QuickTaskStatusProps) {
         })}
       </div>
       <p
-        className="mt-2 min-h-4 text-xs text-zinc-500"
+        className="mt-2 min-h-4 text-xs text-muted"
         aria-live="polite"
       >
         {error ? (

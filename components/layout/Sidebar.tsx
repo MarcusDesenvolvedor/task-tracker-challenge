@@ -19,8 +19,8 @@ interface SidebarProps {
 function navItemClassName(isActive: boolean): string {
   return `flex min-h-10 w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
     isActive
-      ? "bg-zinc-900 text-white"
-      : "text-zinc-400 hover:bg-zinc-900/60 hover:text-white"
+      ? "bg-accent-soft text-foreground"
+      : "text-muted-foreground hover:bg-accent-soft/60 hover:text-foreground"
   }`;
 }
 
@@ -31,19 +31,19 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
   const isNewTaskActive = pathname === "/tasks/new";
 
   return (
-    <aside className="flex w-full shrink-0 flex-col border-b border-zinc-800 bg-black lg:h-full lg:w-72 lg:border-b-0 lg:border-r xl:w-80">
-      <div className="shrink-0 border-b border-zinc-800 px-5 py-5">
+    <aside className="flex w-full shrink-0 flex-col border-b border-border bg-background lg:h-full lg:w-72 lg:border-b-0 lg:border-r xl:w-80">
+      <div className="shrink-0 border-b border-border px-5 py-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <Link
               href="/"
               className="block rounded-md focus-visible:outline-offset-4"
             >
-              <h1 className="truncate text-lg font-semibold text-white">
+              <h1 className="truncate text-lg font-semibold text-foreground">
                 Task Tracker
               </h1>
             </Link>
-            <p className="mt-1 text-sm text-zinc-500">
+            <p className="mt-1 text-sm text-muted">
               {tasks.length} task{tasks.length === 1 ? "" : "s"}
             </p>
           </div>
@@ -51,8 +51,8 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
             href="/tasks/new"
             className={`inline-flex min-h-8 shrink-0 items-center rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
               isNewTaskActive
-                ? "bg-zinc-700 text-white"
-                : "bg-white text-black hover:bg-zinc-200"
+                ? "bg-chip text-foreground"
+                : "bg-foreground text-background hover:opacity-90"
             }`}
           >
             New task
@@ -75,7 +75,7 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
 
       <nav
         aria-label="Secondary"
-        className="mt-auto shrink-0 border-t border-zinc-800 p-3"
+        className="mt-auto shrink-0 border-t border-border p-3"
       >
         <Link
           href="/categories"
@@ -85,10 +85,10 @@ export function Sidebar({ tasks, categories }: SidebarProps) {
           <GearIcon />
           Manage categories
         </Link>
-        <div className="mt-1 flex min-h-10 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-400">
+        <div className="mt-1 flex min-h-10 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground">
           <span
             aria-hidden
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xs font-semibold text-white"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-chip text-xs font-semibold text-foreground"
           >
             D
           </span>
