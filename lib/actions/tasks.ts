@@ -8,13 +8,20 @@ import {
   TaskNotFoundError,
   TaskValidationError,
   updateTask,
+  updateTaskStatus,
 } from "@/lib/services/tasks";
+import type { TaskStatus } from "@/lib/types/task";
 import {
   hasValidationErrors,
   parseTaskFormData,
   type TaskFormErrors,
   validateTaskInput,
 } from "@/lib/validation/task";
+
+export interface TaskStatusActionState {
+  message?: string;
+  status?: TaskStatus;
+}
 
 export interface TaskActionState {
   errors?: TaskFormErrors;
@@ -78,6 +85,25 @@ export async function updateTaskAction(
   revalidatePath(`/tasks/${taskId}`);
   revalidatePath(`/tasks/${taskId}/edit`);
   redirect(`/tasks/${taskId}`);
+}
+
+export async function updateTaskStatusAction(
+  taskId: string,
+  status: TaskStatus,
+): Promise<TaskStatusActionState> {
+  try {
+    const task = updateTaskStatus(taskId, status);
+    revalidatePath("/", "layout");
+    revalidatePath(`/tasks/${taskId}`);
+    revalidatePath(`/tasks/${taskId}/edit`);
+    return { status: task.status };
+  } catch (error) {
+    if (error instanceof TaskNotFoundError) {
+      return { message: "This task no longer exists." };
+    }
+
+    return { message: "Unable to update status. Please try again." };
+  }
 }
 
 export async function deleteTaskAction(taskId: string): Promise<void> {

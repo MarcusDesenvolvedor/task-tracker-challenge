@@ -1,6 +1,7 @@
+import { TASK_STATUS_OPTIONS } from "@/lib/constants/task";
 import { getStore } from "@/lib/data/store";
 import { getCategoryById } from "@/lib/services/categories";
-import type { Task } from "@/lib/types/task";
+import type { Task, TaskStatus } from "@/lib/types/task";
 import {
   hasValidationErrors,
   type TaskInput,
@@ -92,6 +93,32 @@ export function updateTask(id: string, input: TaskInput): Task {
     description: input.description.trim(),
     status: input.status,
     categoryId: input.categoryId,
+    updatedAt: new Date().toISOString(),
+  };
+
+  tasks[index] = updatedTask;
+  return updatedTask;
+}
+
+export function updateTaskStatus(id: string, status: TaskStatus): Task {
+  if (!(TASK_STATUS_OPTIONS as string[]).includes(status)) {
+    throw new Error(`Invalid task status: ${status}`);
+  }
+
+  const { tasks } = getStore();
+  const index = tasks.findIndex((task) => task.id === id);
+
+  if (index === -1) {
+    throw new TaskNotFoundError(id);
+  }
+
+  if (tasks[index].status === status) {
+    return tasks[index];
+  }
+
+  const updatedTask: Task = {
+    ...tasks[index],
+    status,
     updatedAt: new Date().toISOString(),
   };
 

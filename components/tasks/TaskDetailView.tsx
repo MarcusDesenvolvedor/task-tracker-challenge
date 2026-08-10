@@ -2,11 +2,11 @@ import { CategoryColorDot } from "@/components/categories/CategoryColorDot";
 import { ContentHeader } from "@/components/layout/ContentHeader";
 import { ContentPanel } from "@/components/layout/ContentPanel";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getCategoryColorLabel } from "@/lib/constants/category";
 import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 import { DeleteTaskButton } from "./DeleteTaskButton";
+import { QuickTaskStatus } from "./QuickTaskStatus";
 
 interface TaskDetailViewProps {
   task: Task;
@@ -35,7 +35,7 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
             Status
           </dt>
           <dd className="mt-2">
-            <StatusBadge status={task.status} />
+            <QuickTaskStatus taskId={task.id} status={task.status} />
           </dd>
         </div>
         <div>
