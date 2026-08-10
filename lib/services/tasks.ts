@@ -64,6 +64,7 @@ export function createTask(input: TaskInput): Task {
     description: input.description.trim(),
     status: input.status,
     categoryId: input.categoryId,
+    dueAt: input.dueAt,
     createdAt: now,
     updatedAt: now,
   };
@@ -93,6 +94,7 @@ export function updateTask(id: string, input: TaskInput): Task {
     description: input.description.trim(),
     status: input.status,
     categoryId: input.categoryId,
+    dueAt: input.dueAt,
     updatedAt: new Date().toISOString(),
   };
 

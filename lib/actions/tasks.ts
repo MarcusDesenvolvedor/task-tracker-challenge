@@ -15,7 +15,7 @@ import {
   hasValidationErrors,
   parseTaskFormData,
   type TaskFormErrors,
-  validateTaskInput,
+  validateTaskFormData,
 } from "@/lib/validation/task";
 
 export interface TaskStatusActionState {
@@ -32,13 +32,13 @@ export async function createTaskAction(
   _prevState: TaskActionState,
   formData: FormData,
 ): Promise<TaskActionState> {
-  const input = parseTaskFormData(formData);
-  const errors = validateTaskInput(input);
+  const errors = validateTaskFormData(formData);
 
   if (hasValidationErrors(errors)) {
     return { errors };
   }
 
+  const input = parseTaskFormData(formData);
   let task;
 
   try {
@@ -60,12 +60,13 @@ export async function updateTaskAction(
   _prevState: TaskActionState,
   formData: FormData,
 ): Promise<TaskActionState> {
-  const input = parseTaskFormData(formData);
-  const errors = validateTaskInput(input);
+  const errors = validateTaskFormData(formData);
 
   if (hasValidationErrors(errors)) {
     return { errors };
   }
+
+  const input = parseTaskFormData(formData);
 
   try {
     updateTask(taskId, input);

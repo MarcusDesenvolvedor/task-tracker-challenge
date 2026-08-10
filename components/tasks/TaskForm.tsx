@@ -11,10 +11,11 @@ import type { Category } from "@/lib/types/category";
 import type { Task } from "@/lib/types/task";
 import {
   hasValidationErrors,
-  parseTaskFormData,
   type TaskFormErrors,
-  validateTaskInput,
+  validateTaskFormData,
 } from "@/lib/validation/task";
+import { DueDatePicker } from "./DueDatePicker";
+import { DueTimePicker } from "./DueTimePicker";
 import { TaskStatusSelect } from "./TaskStatusSelect";
 
 interface TaskFormProps {
@@ -66,8 +67,7 @@ export function TaskForm({
   }, [isPending, state.errors, state.message, onSuccess]);
 
   function handleSubmit(formData: FormData) {
-    const input = parseTaskFormData(formData);
-    const errors = validateTaskInput(input);
+    const errors = validateTaskFormData(formData);
     setClientErrors(errors);
 
     if (hasValidationErrors(errors)) {
@@ -116,6 +116,33 @@ export function TaskForm({
             categories={categories}
             defaultValue={task?.categoryId ?? categories[0]?.id ?? ""}
             hasError={Boolean(errors.categoryId)}
+          />
+        </FormField>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <FormField
+          card
+          label="Due date"
+          htmlFor="dueDate"
+          hint="Optional. Tap the calendar to pick a date."
+          error={errors.dueAt}
+        >
+          <DueDatePicker
+            defaultValue={task?.dueAt}
+            hasError={Boolean(errors.dueAt)}
+          />
+        </FormField>
+
+        <FormField
+          card
+          label="Due time"
+          htmlFor="dueTime"
+          hint="Optional. Tap the clock to pick a time."
+        >
+          <DueTimePicker
+            defaultValue={task?.dueAt}
+            hasError={Boolean(errors.dueAt)}
           />
         </FormField>
       </div>

@@ -1,3 +1,4 @@
+import { combineDateAndTime } from "@/lib/format/date";
 import type { TaskStatus } from "@/lib/types/task";
 
 export interface TaskInput {
@@ -5,15 +6,19 @@ export interface TaskInput {
   description: string;
   status: TaskStatus;
   categoryId: string;
+  dueAt: string | null;
 }
 
 export interface TaskFormErrors {
   title?: string;
   categoryId?: string;
+  dueAt?: string;
 }
 
 export function parseTaskFormData(formData: FormData): TaskInput {
   const status = formData.get("status");
+  const dueDate = String(formData.get("dueDate") ?? "").trim();
+  const dueTime = String(formData.get("dueTime") ?? "").trim();
 
   return {
     title: String(formData.get("title") ?? ""),
@@ -23,6 +28,8 @@ export function parseTaskFormData(formData: FormData): TaskInput {
         ? status
         : "todo",
     categoryId: String(formData.get("categoryId") ?? ""),
+    dueAt:
+      dueDate || dueTime ? combineDateAndTime(dueDate, dueTime) : null,
   };
 }
 
@@ -35,6 +42,22 @@ export function validateTaskInput(input: TaskInput): TaskFormErrors {
 
   if (!input.categoryId) {
     errors.categoryId = "Category is required.";
+  }
+
+  return errors;
+}
+
+/** Validates form fields including incomplete due date/time pairs. */
+export function validateTaskFormData(formData: FormData): TaskFormErrors {
+  const input = parseTaskFormData(formData);
+  const errors = validateTaskInput(input);
+  const dueDate = String(formData.get("dueDate") ?? "").trim();
+  const dueTime = String(formData.get("dueTime") ?? "").trim();
+
+  if ((dueDate && !dueTime) || (!dueDate && dueTime)) {
+    errors.dueAt = "Set both a due date and a due time.";
+  } else if ((dueDate || dueTime) && input.dueAt === null) {
+    errors.dueAt = "Pick a valid due date and time.";
   }
 
   return errors;

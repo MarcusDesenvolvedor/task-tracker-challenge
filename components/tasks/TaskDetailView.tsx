@@ -59,6 +59,18 @@ export function TaskDetailView({ task, category }: TaskDetailViewProps) {
         </div>
         <div>
           <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+            Due
+          </dt>
+          <dd className="mt-2 text-sm font-medium text-white">
+            {task.dueAt ? (
+              <time dateTime={task.dueAt}>{formatDateTime(task.dueAt)}</time>
+            ) : (
+              <span className="text-zinc-500">No due date</span>
+            )}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
             Created
           </dt>
           <dd className="mt-2 text-sm font-medium text-white">

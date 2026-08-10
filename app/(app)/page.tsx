@@ -1,7 +1,10 @@
-import { ContentHeader } from "@/components/layout/ContentHeader";
 import { ContentPanel } from "@/components/layout/ContentPanel";
+import { OverviewAnalytics } from "@/components/overview/analytics/OverviewAnalytics";
 import { CategoryBreakdown } from "@/components/overview/CategoryBreakdown";
+import { CategoryProgress } from "@/components/overview/CategoryProgress";
 import { DashboardPanel } from "@/components/overview/DashboardPanel";
+import { OverviewGreeting } from "@/components/overview/OverviewGreeting";
+import { PriorityTasks } from "@/components/overview/PriorityTasks";
 import { StatCard } from "@/components/overview/StatCard";
 import { TaskStatusBar } from "@/components/overview/TaskStatusBar";
 import {
@@ -14,6 +17,8 @@ import {
   getCategoryTaskCount,
 } from "@/lib/services/categories";
 import { getTasks } from "@/lib/services/tasks";
+import { summarizeCategoryProgress } from "@/lib/stats/category-progress";
+import { getPriorityTasks } from "@/lib/stats/priority";
 import { summarizeTasksByStatus } from "@/lib/stats/tasks";
 
 const STAT_CARD_STAGGER_MS = 60;
@@ -21,7 +26,9 @@ const STAT_CARD_STAGGER_MS = 60;
 export default function OverviewPage() {
   const tasks = getTasks();
   const summary = summarizeTasksByStatus(tasks);
+  const priorityTasks = getPriorityTasks(tasks);
   const categories = getCategories();
+  const categoryProgress = summarizeCategoryProgress(categories, tasks);
   const taskCountByCategoryId = Object.fromEntries(
     categories.map((category) => [
       category.id,
@@ -31,11 +38,7 @@ export default function OverviewPage() {
 
   return (
     <ContentPanel wide>
-      <ContentHeader
-        eyebrow="Dashboard"
-        title="Overview"
-        description="A quick summary of where all of your tasks currently stand."
-      />
+      <OverviewGreeting />
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <StatCard label="Total tasks" value={summary.total} />
@@ -51,6 +54,16 @@ export default function OverviewPage() {
       </div>
 
       <div className="mt-3 grid gap-3 sm:mt-4 sm:gap-4">
+        <OverviewAnalytics tasks={tasks} categories={categories} />
+
+        <DashboardPanel title="Priority tasks" delayMs={180}>
+          <PriorityTasks tasks={priorityTasks} categories={categories} />
+        </DashboardPanel>
+
+        <DashboardPanel title="Category progress" delayMs={210}>
+          <CategoryProgress items={categoryProgress} />
+        </DashboardPanel>
+
         <DashboardPanel title="Task distribution" delayMs={240}>
           <TaskStatusBar summary={summary} />
         </DashboardPanel>
